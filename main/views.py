@@ -35,7 +35,7 @@ def loginView(request):
 @login_required
 def users(request):
     all_users = User.objects.all()
-    return render(request, "users.html", context={'title':"Users", 'users': all_users})
+    return render(request, "test.html", context={'title':"Users", 'users': all_users})
 
 @login_required
 def logoutView(request):
