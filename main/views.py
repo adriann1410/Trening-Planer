@@ -5,11 +5,15 @@ from django.contrib.auth.decorators import login_required
 from  django.contrib.auth import login, logout, authenticate, get_user_model
 
 from .forms import  LoginForm
+from .models import CoachProfile
 
 # Create your views here.
 def index(request):
     return render(request, "index.html", context={'title':"Index"})
 
+def coachesList(request):
+    coaches = CoachProfile.objects.all()
+    return render(request, "coaches.html", {'coaches':coaches})
 
 def loginView(request):
     if request.method == 'POST':
@@ -41,3 +45,4 @@ def users(request):
 def logoutView(request):
     logout(request)
     return redirect(loginView)
+

@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+<div class = "container">
+    {% for coach in coaches %}
+        <div class = "mt-4">
+            <div class="media">
+                <a class="badge badge-light" href="/user/{{ coach.user_id }}">
+                <img class="mr-3" src="{{ coach.img_url }}" alt="Generic placeholder image" height="90" width="90">
+                 <div class="media-body">
+
+                 <h5 class="mt-0">{{ coach.user.first_name }} {{ coach.user.last_name }}</h5></a>
+                  {{ coach.description | linebreaks }}
+
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}
