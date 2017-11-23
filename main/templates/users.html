@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    <h2>Witaj {{ user.email }} !</h2>
+
+    <hr>
+    <ul>
+    {% for user in users %}
+        <li>{{ user.email }} </li>
+    {% endfor %}
+    </ul>
+
+{% endblock %}
