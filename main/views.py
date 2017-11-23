@@ -41,7 +41,7 @@ def registerView(request):
             try:
                 user = User.objects.get(email=cd.get('email'))
                 if user:
-                    message = "Email already in use"
+                    message = "Email already in use xd"
                     return render(request, "register.html", context={'title': "Register", 'form': form, 'message':message})
             except User.DoesNotExist as e:
                 pass
