@@ -30,7 +30,7 @@ def loginView(request):
                 return render(request, "login.html", context={'title':"Login", 'form': form, 'message': message})
 
             login(request, user)
-            return redirect(users)
+            return redirect(index)
     else:
         form = LoginForm()
 
