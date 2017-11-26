@@ -7,11 +7,6 @@
 .idea/**/workspace.xml
 .idea/**/tasks.xml
 .idea/dictionaries
-main/__pycache__/admin.cpython-36.pyc
-main/__pycache__/models.cpython-36.pyc
-main/__pycache__/urls.cpython-36.pyc
-main/__pycache__/views.cpython-36.pyc
-
 
 # Sensitive or high-churn files:
 .idea/**/dataSources/
@@ -21,6 +16,15 @@ main/__pycache__/views.cpython-36.pyc
 .idea/**/sqlDataSources.xml
 .idea/**/dynamic.xml
 .idea/**/uiDesigner.xml
+.main/__pycache__/admin.cpython-36.pyc
+.main/__pycache__/models.cpython-36.pyc
+.main/__pycache__/urls.cpython-36.pyc
+.main/__pycache__/views.cpython-36.pyc
+.main/migrations/__pycache__/0002_coachprofile_img_url.cpython-36.pyc
+.main/migrations/__pycache__/0003_coachprofile_rate_counter.cpython-36.pyc
+.planer/__pycache__/
+
+
 
 # Gradle:
 .idea/**/gradle.xml
@@ -57,3 +61,19 @@ fabric.properties
 
 .idea
 
+db.sqlite3
+
+*.egg-info
+*.pot
+*.py[co]
+.tox/
+__pycache__
+MANIFEST
+dist/
+docs/_build/
+docs/locale/
+node_modules/
+tests/coverage_html/
+tests/.coverage
+build/
+tests/report/
