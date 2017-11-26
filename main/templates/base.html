@@ -33,7 +33,7 @@
     </ul>
       <span class="nav-item active">
       {% if user.is_authenticated %}
-          <a class="nav-link" href="#">{{ user.email }}</a>
+          <a class="nav-link nav-item" href="#" style="color: gainsboro">{{ user.email }}</a>
           <h5><a class="nav-link" href={% url 'logout' %}><span class="badge badge-secondary">Wyloguj</span></a></h5>
             {% else %}
           <h5><a class="nav-link" href={% url 'login' %}><span class="badge badge-secondary">Zaloguj</span></a></h5>
@@ -52,7 +52,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
-
+<!--own js file -->
+    <script src="{% static 'js/main.js' %}"></script>
 
 
 </body>

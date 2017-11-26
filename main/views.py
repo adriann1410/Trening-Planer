@@ -15,6 +15,22 @@ def coachesList(request):
     coaches = CoachProfile.objects.all()
     return render(request, "coaches.html", {'coaches':coaches})
 
+def rate_coach(request):
+    coach_id = request.GET.get('coach_id', None)
+    rate = request.GET.get('rate', None)
+
+    currentrate = 0
+    if (coach_id):
+        coach = CoachProfile.objects.get(user_id=int(coach_id))
+        if coach is not None:
+            coachrates = coach.rate_counter +1
+            currentrate = round((coach.rate + rate) / coachrates,1)
+            print(currentrate)
+            coach.rate = currentrate
+            coach.rate_counter = coachrates
+            coach.save()
+    return HttpResponse(currentrate)
+
 def loginView(request):
     if request.method == 'POST':
         # create a form instance and populate it with data from the request:
