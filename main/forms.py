@@ -13,3 +13,9 @@ class LoginForm(forms.Form):
     #
     #     if not user.is_active():
     #         raise forms.ValidationError("User is not active")
+
+
+class UserForm(forms.Form):
+    email = forms.EmailField(max_length=100, required=True)
+    password = forms.CharField(widget=forms.PasswordInput(), required=True, max_length=100)
+

@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class = "container">
+    {% for coach in coaches %}
+        <div class = "mt-4">
+            <div class = "jumbotron">
+                <div class="media">
+                    <a href="/user/{{ coach.user_id }}" style="color: inherit">
+                    <img class="mr-3" src="{{ coach.img_url }}" alt="Generic placeholder image" height="90" width="90"></a>
+                     <div class="media-body">
+                     <a href="/user/{{ coach.user_id }}" style="color: inherit">
+                     <h5 class="mt-0">{{ coach.user.first_name }} {{ coach.user.last_name }}</h5></a>
+                         <p>{{ coach.description | linebreaks }}</p>
+                    </div>
+                </div>
+                <div class="dropdown">
+                      <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="background-color: #ffcc00">
+                          ocena : <span id="{{ forloop.counter }}"> {{ coach.rate }} </span>
+                        <span class="caret"></span>
+                      </button>
+                      <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                        <button  data-rate="1" data-id="{{coach.user_id}}" data-iterator="{{ forloop.counter }}" class="dropdown-item ratebtn" type="button">1.0</button>
+                        <button  data-rate="2" data-id="{{coach.user_id}}" data-iterator="{{ forloop.counter }}" class="dropdown-item ratebtn" type="button">2.0</button>
+                        <button  data-rate="3" data-id="{{coach.user_id}}" data-iterator="{{ forloop.counter }}" class="dropdown-item ratebtn" type="button">3.0</button>
+                        <button  data-rate="4" data-id="{{coach.user_id}}" data-iterator="{{ forloop.counter }}" class="dropdown-item ratebtn" type="button">4.0</button>
+                        <button  data-rate="5" data-id="{{coach.user_id}}" data-iterator="{{ forloop.counter }}" class="dropdown-item ratebtn" type="button">5.0</button>
+                      </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}
