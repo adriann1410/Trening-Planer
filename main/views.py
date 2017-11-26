@@ -19,17 +19,17 @@ def coachesList(request):
     return render(request, "coaches.html", {'coaches':coaches})
 
 def rate_coach(request):
-    coach_id = request.GET.get('coach_id', None)
-    rate = request.GET.get('rate', None)
+    coach_id = request.POST.get('coach_id', None)
+    rate = request.POST.get('rate', None)
 
     currentrate = 0
     if (coach_id):
         coach = CoachProfile.objects.get(user_id=int(coach_id))
         if coach is not None:
-            coachrates = coach.rate_counter +1
-            currentrate = round((coach.rate + rate) / coachrates,1)
-            print(currentrate)
+            coachrates = coach.rate_counter + 1
+            currentrate = round((coach.rate_sum + float(rate)) / float(coachrates),1)
             coach.rate = currentrate
+            coach.rate_sum = coach.rate_sum + float(rate)
             coach.rate_counter = coachrates
             coach.save()
     return HttpResponse(currentrate)

@@ -1,15 +1,14 @@
 $('.ratebtn').on('click', function(event){
-    console.log("jestem")
     event.preventDefault();
-    var element = $(this);
-    var rate = $('#rate')
-
+    var id = $(this).attr("data-iterator")
+    var rate = $('#'+id)
+    console.log(rate);
     $.ajax({
         url : '/rate_coach/',
-        type : 'GET',
+        type : 'POST',
         data : { coach_id : $(this).attr("data-id"), rate : $(this).attr("data-rate")},
 
-        success : function(data){
+        success : function(response){
            rate.html(' ' + response);
         }
     });
