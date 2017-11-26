@@ -8,4 +8,6 @@ urlpatterns = [
     url(r'^users$', views.users, name="users"),
     url(r'^coaches$', views.coachesList, name = "coaches"),
     url(r'^rate_coach/$', views.rate_coach, name= "rate_coach"),
+    url(r'^register$', views.registerView, name="register"),
+
 ]
