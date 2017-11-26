@@ -2,10 +2,13 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from  django.contrib.auth import login, logout, authenticate, get_user_model
+from django.contrib.auth import login, logout, authenticate, get_user_model
+from django.contrib.auth.hashers import make_password
 
-from .forms import  LoginForm
+
+from .forms import  LoginForm, UserForm
 from .models import CoachProfile
+
 
 # Create your views here.
 def index(request):
@@ -51,6 +54,29 @@ def loginView(request):
         form = LoginForm()
 
     return  render(request, "login.html", context={'title':"Login", 'form': form})
+
+def registerView(request):
+    if request.method == "POST":
+        form = UserForm(request.POST)
+        if form.is_valid():
+            cd = form.cleaned_data
+            try:
+                user = User.objects.get(email=cd.get('email'))
+                if user:
+                    message = "Email already in use xd"
+                    return render(request, "register.html", context={'title': "Register", 'form': form, 'message':message})
+            except User.DoesNotExist as e:
+                pass
+            password = make_password(cd.get('password'))
+
+            new_user = User(email=cd.get('email'), password=password)
+            new_user.save()
+    #       mail.send(email=cd.get('email'))
+
+    else:
+        form = UserForm
+    return render(request, "register.html", context={'title':"Register", 'form': form})
+
 
 @login_required
 def users(request):
