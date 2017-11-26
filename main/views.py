@@ -5,12 +5,34 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, logout, authenticate, get_user_model
 from django.contrib.auth.hashers import make_password
 
+
 from .forms import  LoginForm, UserForm
+from .models import CoachProfile
+
 
 # Create your views here.
 def index(request):
     return render(request, "index.html", context={'title':"Index"})
 
+def coachesList(request):
+    coaches = CoachProfile.objects.all()
+    return render(request, "coaches.html", {'coaches':coaches})
+
+def rate_coach(request):
+    coach_id = request.GET.get('coach_id', None)
+    rate = request.GET.get('rate', None)
+
+    currentrate = 0
+    if (coach_id):
+        coach = CoachProfile.objects.get(user_id=int(coach_id))
+        if coach is not None:
+            coachrates = coach.rate_counter +1
+            currentrate = round((coach.rate + rate) / coachrates,1)
+            print(currentrate)
+            coach.rate = currentrate
+            coach.rate_counter = coachrates
+            coach.save()
+    return HttpResponse(currentrate)
 
 def loginView(request):
     if request.method == 'POST':
@@ -27,7 +49,7 @@ def loginView(request):
                 return render(request, "login.html", context={'title':"Login", 'form': form, 'message': message})
 
             login(request, user)
-            return redirect(users)
+            return redirect(index)
     else:
         form = LoginForm()
 
@@ -65,3 +87,4 @@ def users(request):
 def logoutView(request):
     logout(request)
     return redirect(loginView)
+
