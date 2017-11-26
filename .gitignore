@@ -16,6 +16,15 @@
 .idea/**/sqlDataSources.xml
 .idea/**/dynamic.xml
 .idea/**/uiDesigner.xml
+.main/__pycache__/admin.cpython-36.pyc
+.main/__pycache__/models.cpython-36.pyc
+.main/__pycache__/urls.cpython-36.pyc
+.main/__pycache__/views.cpython-36.pyc
+.main/migrations/__pycache__/0002_coachprofile_img_url.cpython-36.pyc
+.main/migrations/__pycache__/0003_coachprofile_rate_counter.cpython-36.pyc
+.planer/__pycache__/
+
+
 
 # Gradle:
 .idea/**/gradle.xml
