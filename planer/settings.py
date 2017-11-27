@@ -115,6 +115,15 @@ USE_L10N = True
 USE_TZ = True
 
 
+# Email
+
+EMAIL_HOST = 'smtp.gmail.net'
+EMAIL_HOST_USER = 'workoutplanner.pk@gmail.com'
+EMAIL_HOST_PASSWORD = 'adri96pl'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
