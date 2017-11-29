@@ -4,10 +4,13 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, logout, authenticate, get_user_model
 from django.contrib.auth.hashers import make_password
-
+from django.core.mail import send_mail
+from django.conf import  settings
 
 from .forms import  LoginForm, UserForm
 from .models import CoachProfile
+
+import socket
 
 
 # Create your views here.
@@ -69,9 +72,12 @@ def registerView(request):
                 pass
             password = make_password(cd.get('password'))
 
-            new_user = User(email=cd.get('email'), password=password)
+            new_user = User(email=cd.get('email'), password=password, username=cd.get('email'))
             new_user.save()
-    #       mail.send(email=cd.get('email'))
+            subject = "Dziękujemy za rejestrację w Planer"
+            mail_message = "Tutaj bedzie link do potwierdzenia konta"
+            # socket.getaddrinfo('127.0.0.1', 8000)
+            send_mail(subject, mail_message, settings.EMAIL_HOST_USER, [cd.get('email')], fail_silently=True)
 
     else:
         form = UserForm
