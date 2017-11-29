@@ -17,22 +17,23 @@ class CoachProfile(models.Model):
 
 class NormalProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    height = models.IntegerField()
-    weight = models.IntegerField()
+    height = models.IntegerField(default=0)
+    weight = models.IntegerField(default=0)
 
     def __str__(self):
-        return  self.user.username
+        return self.user.username
 
 
 class Pupil(models.Model):
-    coach_id = models.ManyToOneRel(CoachProfile)
+    coach_id = models.ForeignKey(CoachProfile)
     pupil_id = models.OneToOneField(NormalProfile)
 
     def __str__(self):
         return self.id
 
+
 class Training(models.Model):
-    user = models.ManyToOneRel(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     date = models.DateField()
     exercises_num = models.IntegerField(default=0)
     b_weight = models.IntegerField(default=0)
@@ -42,19 +43,19 @@ class Training(models.Model):
 
 
 class Exercise(models.Model):
-    training = models.ManyToOneRel(Training, on_delete=models.CASCADE)
+    training = models.ForeignKey(Training, on_delete=models.CASCADE)
     exercise_name = models.CharField(max_length=100)
-    series = models.IntegerField()
-    reps = models.IntegerField()
-    weight = models.IntegerField()
+    series = models.IntegerField(default=0)
+    reps = models.IntegerField(default=0)
+    weight = models.IntegerField(default=0)
 
     def __str__(self):
         return self.exercise_name
 
 
 class Message(models.Model):
-    author = models.ManyToOneRel(User)
-    receiver = models.ManyToOneRel(User)
+    author = models.ForeignKey(User, related_name='sent_messages', verbose_name=("Sender"))
+    receiver = models.ForeignKey(User, related_name='received_messages', verbose_name=("Reveiver"))
     content = models.TextField(max_length=500)
     date = models.DateField()
 
