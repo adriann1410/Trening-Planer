@@ -15,6 +15,12 @@ class CoachProfile(models.Model):
         return self.user.username
 
 
+class Comment(models.Model):
+    user = models.ForeignKey(CoachProfile, on_delete=models.CASCADE)
+    content = models.TextField(max_length=500)
+    commentRate = models.IntegerField(default=0)
+
+
 class NormalProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     height = models.IntegerField(default=0)

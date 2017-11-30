@@ -1,9 +1,27 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div>
-    profil zwykłego użytkownika {{ user.user.username }}
-</div>
 
+    <div class="container">
+        <div class="row">
+
+                <div class="col-12 ">
+                    <div class="btn-group d-flex justify-content-end">
+                        {% if request.user.id == page_user.user_id %}
+                        <button class="btn">edytuj profil</button>
+                        {% endif %}
+                        <button class="btn">wiadomość</button>
+                        <button class="btn">jakis przycisk</button>
+                    </div>
+                </div>
+            <br><br>
+
+        </div>
+        <div class="row">
+            <div class="col">
+                <h3>{{ page_user.user.username }}</h3>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 

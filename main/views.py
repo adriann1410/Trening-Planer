@@ -46,7 +46,7 @@ def userProfile(request, some_id):
         return render(request, 'coachProfile.html', {'coach': coach})
     elif NormalProfile.objects.filter(user_id=some_id).exists():
         user = NormalProfile.objects.get(user_id=some_id)
-        return render(request, "userProfile.html", {'user': user})
+        return render(request, "userProfile.html", {'page_user': user})
     else:
         return HttpResponse("Użytkownik nie istnieje")
 
