@@ -16,13 +16,18 @@ class CoachProfile(models.Model):
 
 
 class Comment(models.Model):
-    user = models.ForeignKey(CoachProfile, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, related_name='get_comment', verbose_name=("coach"))
+    author = models.ForeignKey(User, related_name='sent_comment', verbose_name=("author"))
     content = models.TextField(max_length=500)
     commentRate = models.IntegerField(default=0)
+
+    def __str__(self):
+        return self.id
 
 
 class NormalProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    old = models.IntegerField(default=0)
     height = models.IntegerField(default=0)
     weight = models.IntegerField(default=0)
 

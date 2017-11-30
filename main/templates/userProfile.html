@@ -19,7 +19,22 @@
         </div>
         <div class="row">
             <div class="col">
-                <h3>{{ page_user.user.username }}</h3>
+                <h2>{{ page_user.user.username }}</h2>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col offset-md-1">
+                <h4>Wiek: {{ page_user.old }}</h4>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col offset-md-1">
+                <h4>Wzrost: {{ page_user.height }}</h4>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col offset-md-1">
+                <h4>Waga: {{ page_user.weight }}</h4>
             </div>
         </div>
     </div>
