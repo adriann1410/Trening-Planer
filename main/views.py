@@ -6,9 +6,10 @@ from django.contrib.auth import login, logout, authenticate, get_user_model
 from django.contrib.auth.hashers import make_password
 from django.core.mail import send_mail
 from django.conf import  settings
+from django.core.exceptions import ObjectDoesNotExist
 
 from .forms import  LoginForm, UserForm
-from .models import CoachProfile
+from .models import CoachProfile, NormalProfile
 
 import socket
 
@@ -37,6 +38,19 @@ def rate_coach(request):
             coach.save()
     return HttpResponse(currentrate)
 
+
+def userProfile(request, some_id):
+
+    if CoachProfile.objects.filter(user_id=some_id).exists():
+        coach = CoachProfile.objects.get(user_id=some_id)
+        return render(request, 'coachProfile.html', {'coach': coach})
+    elif NormalProfile.objects.filter(user_id=some_id).exists():
+        user = NormalProfile.objects.get(user_id=some_id)
+        return render(request, "userProfile.html", {'user': user})
+    else:
+        return HttpResponse("Użytkownik nie istnieje")
+
+
 def loginView(request):
     if request.method == 'POST':
         # create a form instance and populate it with data from the request:
@@ -57,6 +71,7 @@ def loginView(request):
         form = LoginForm()
 
     return  render(request, "login.html", context={'title':"Login", 'form': form})
+
 
 def registerView(request):
     if request.method == "POST":
