@@ -1,9 +1,36 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
-<div>
-    profil trenera {{ coach.user.username }}
-</div>
+
+    <div class="container">
+        <div class="row">
+                <div class="col-12 ">
+                    <div class="btn-group d-flex justify-content-end">
+                        {% if request.user.id == page_user.user_id %}
+                        <button class="btn">edytuj profil</button>
+                        {% else %}
+                        <button class="btn">wiadomość</button>
+                        <button class="btn">zaproś trenera</button>
+                        {% endif %}
+                    </div>
+                </div>
+            <br><br>
+        </div>
+        <div class="row ">
+            <div class="col-8">
+                <div class="media">
+                <img class="mr-3" src="{{coach.img_url}}" alt="Generic placeholder image" height="120" width="120">
+                     <div class="media-body">
+                     <h5 class="mt-0">{{ coach.user.first_name }} {{ coach.user.last_name }}</h5>
+                         <p>{{ coach.description | linebreaks }}</p>
+                     </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
 
 {% endblock %}
 
