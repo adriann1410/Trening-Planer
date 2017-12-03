@@ -22,7 +22,7 @@ class Comment(models.Model):
     commentRate = models.IntegerField(default=0)
 
     def __str__(self):
-        return self.id
+        return str(self.id)
 
 
 class NormalProfile(models.Model):

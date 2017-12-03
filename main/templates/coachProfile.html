@@ -7,11 +7,11 @@
         <div class="row">
                 <div class="col-12 ">
                     <div class="btn-group d-flex justify-content-end">
-                        {% if request.user.id == page_user.user_id %}
+                        {% if request.user.id == coach.user_id %}
                         <button class="btn">edytuj profil</button>
                         {% else %}
                         <button class="btn">wiadomość</button>
-                        <button class="btn">zaproś trenera</button>
+                        <button class="btn">nawiąż współpracę</button>
                         {% endif %}
                     </div>
                 </div>
@@ -20,7 +20,7 @@
         <div class="row ">
             <div class="col-8">
                 <div class="media">
-                <img class="mr-3" src="{{coach.img_url}}" alt="Generic placeholder image" height="120" width="120">
+                <img class="mr-3" src="../../{{coach.img_url}}" alt="Generic placeholder image" height="120" width="120">
                      <div class="media-body">
                      <h5 class="mt-0">{{ coach.user.first_name }} {{ coach.user.last_name }}</h5>
                          <p>{{ coach.description | linebreaks }}</p>
@@ -29,6 +29,21 @@
             </div>
 
         </div>
+        <div class="row mt-4">
+            <h4>Komentarze:</h4>
+            <br><br>
+        </div>
+        {% for comment in comments %}
+        <div class="row">
+            <div class="col-2">
+                <h5>{{ comment.author }}</h5>
+            </div>
+            <div class="col-6">
+                <br>
+                {{ comment.content | linebreaks }}
+            </div>
+        </div>
+        {% endfor %}
 
     </div>
 

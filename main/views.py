@@ -8,8 +8,8 @@ from django.core.mail import send_mail
 from django.conf import  settings
 from django.core.exceptions import ObjectDoesNotExist
 
-from .forms import  LoginForm, UserForm
-from .models import CoachProfile, NormalProfile
+from .forms import LoginForm, UserForm
+from .models import CoachProfile, NormalProfile, Comment
 
 import socket
 
@@ -43,7 +43,9 @@ def userProfile(request, some_id):
 
     if CoachProfile.objects.filter(user_id=some_id).exists():
         coach = CoachProfile.objects.get(user_id=some_id)
-        return render(request, 'coachProfile.html', {'coach': coach})
+        comments = Comment.objects.filter(user_id=some_id)
+        print(comments)
+        return render(request, 'coachProfile.html', {'coach': coach, 'comments': comments})
     elif NormalProfile.objects.filter(user_id=some_id).exists():
         user = NormalProfile.objects.get(user_id=some_id)
         return render(request, "userProfile.html", {'page_user': user})
