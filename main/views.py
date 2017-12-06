@@ -43,7 +43,7 @@ def userProfile(request, some_id):
 
     if CoachProfile.objects.filter(user_id=some_id).exists():
         coach = CoachProfile.objects.get(user_id=some_id)
-        comments = Comment.objects.filter(user_id=some_id)
+        comments = reversed(Comment.objects.filter(user_id=some_id))
         print(comments)
         return render(request, 'coachProfile.html', {'coach': coach, 'comments': comments})
     elif NormalProfile.objects.filter(user_id=some_id).exists():

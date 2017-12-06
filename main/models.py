@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+import datetime
 
 
 # Create your models here.
@@ -18,6 +19,7 @@ class CoachProfile(models.Model):
 class Comment(models.Model):
     user = models.ForeignKey(User, related_name='get_comment', verbose_name=("coach"))
     author = models.ForeignKey(User, related_name='sent_comment', verbose_name=("author"))
+    date = models.DateField(default=datetime.date.today)
     content = models.TextField(max_length=500)
     commentRate = models.IntegerField(default=0)
 
