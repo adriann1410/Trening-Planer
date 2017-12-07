@@ -7,7 +7,7 @@
         <div class="row">
                 <div class="col-12 ">
                     <div class="btn-group d-flex justify-content-end">
-                        {% if request.user.id == coach.user_id %}
+                        {% if request.user.id == coach.profile.user_id %}
                         <button class="btn">edytuj profil</button>
                         {% else %}
                         <button class="btn">wiadomość</button>
@@ -22,7 +22,7 @@
                 <div class="media">
                 <img class="mr-3" src="../../{{coach.img_url}}" alt="Generic placeholder image" height="120" width="120">
                      <div class="media-body">
-                     <h5 class="mt-0">{{ coach.user.first_name }} {{ coach.user.last_name }}</h5>
+                     <h5 class="mt-0">{{ coach.profile.user.first_name }} {{ coach.profile.user.last_name }}</h5>
                          <p>{{ coach.description | linebreaks }}</p>
                      </div>
                 </div>
@@ -34,7 +34,7 @@
                         Wiek:
                     </div>
                     <div class="col-sm-6 attribute_value">
-                        {{ coach.user.username }}
+                        {{ coach.profile.old }}
                     </div>
 
                 </div>
@@ -44,7 +44,7 @@
                         Wzrost:
                     </div>
                     <div class="col-sm-6 attribute_value">
-                        {{ coach.user.username }}
+                        {{ coach.profile.height }}
                     </div>
                 </div>
                 <hr class="detail_row">
@@ -53,16 +53,16 @@
                         Waga:
                     </div>
                     <div class="col-sm-6 attribute_value">
-                        {{ coach.user.username }}
+                        {{ coach.profile.weight }}
                     </div>
                 </div>
                 <hr class="detail_row">
                 <div class="row">
                     <div class="col-sm-5 attribute_name">
-                       Staż:
+                       Na naszej stronie od:
                     </div>
                     <div class="col-sm-6 attribute_value">
-                        {{ coach.user.username }}
+                        {{ coach.profile.user.date_joined }}
                     </div>
                 </div>
             </div>

@@ -9,7 +9,7 @@ from django.conf import  settings
 from django.core.exceptions import ObjectDoesNotExist
 
 from .forms import LoginForm, UserForm
-from .models import CoachProfile, NormalProfile, Comment
+from .models import CoachProfile, Profile, Comment
 
 import socket
 
@@ -46,8 +46,8 @@ def userProfile(request, some_id):
         comments = reversed(Comment.objects.filter(user_id=some_id))
         print(comments)
         return render(request, 'coachProfile.html', {'coach': coach, 'comments': comments})
-    elif NormalProfile.objects.filter(user_id=some_id).exists():
-        user = NormalProfile.objects.get(user_id=some_id)
+    elif Profile.objects.filter(user_id=some_id).exists():
+        user = Profile.objects.get(user_id=some_id)
         return render(request, "userProfile.html", {'page_user': user})
     else:
         return HttpResponse("Użytkownik nie istnieje")
