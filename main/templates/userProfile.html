@@ -17,24 +17,39 @@
             <br><br>
 
         </div>
-        <div class="row">
-            <div class="col">
-                <h2>{{ page_user.user.username }}</h2>
+        <div class="row mt-5">
+            <div class="col-md-8 col-sm-12">
+                <h3>{{ page_user.user.first_name }} {{ page_user.user.last_name }}</h3>
             </div>
-        </div>
-        <div class="row mt-4">
-            <div class="col offset-md-1">
-                <h4>Wiek: {{ page_user.old }}</h4>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col offset-md-1">
-                <h4>Wzrost: {{ page_user.height }}</h4>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col offset-md-1">
-                <h4>Waga: {{ page_user.weight }}</h4>
+            <div class="col-md-4 col-sm-12">
+                <h5>Podstawowe informacje:</h5>
+                <div class="row">
+                    <div class="col-sm-5 attribute_name">
+                        Wiek:
+                    </div>
+                    <div class="col-sm-6 attribute_value">
+                        {{ page_user.old }}
+                    </div>
+
+                </div>
+                <hr class="detail_row">
+                <div class="row">
+                    <div class="col-sm-5 attribute_name">
+                        Wzrost:
+                    </div>
+                    <div class="col-sm-6 attribute_value">
+                        {{ page_user.height }}
+                    </div>
+                </div>
+                <hr class="detail_row">
+                <div class="row">
+                    <div class="col-sm-5 attribute_name">
+                        Waga:
+                    </div>
+                    <div class="col-sm-6 attribute_value">
+                        {{ page_user.weight }}
+                    </div>
+                </div>
             </div>
         </div>
     </div>

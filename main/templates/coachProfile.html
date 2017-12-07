@@ -17,12 +17,12 @@
                 </div>
             <br><br>
         </div>
-        <div class="row ">
+        <div class="row mt-5">
             <div class="col-md-8 col-sm-12">
                 <div class="media">
                 <img class="mr-3" src="../../{{coach.img_url}}" alt="Generic placeholder image" height="120" width="120">
                      <div class="media-body">
-                     <h5 class="mt-0">{{ coach.profile.user.first_name }} {{ coach.profile.user.last_name }}</h5>
+                     <h4>{{ coach.profile.user.first_name }} {{ coach.profile.user.last_name }}</h4>
                          <p>{{ coach.description | linebreaks }}</p>
                      </div>
                 </div>
@@ -59,10 +59,10 @@
                 <hr class="detail_row">
                 <div class="row">
                     <div class="col-sm-5 attribute_name">
-                       Na naszej stronie od:
+                       Na stronie od:
                     </div>
                     <div class="col-sm-6 attribute_value">
-                        {{ coach.profile.user.date_joined }}
+                        {{ coach.profile.user.date_joined.date }}
                     </div>
                 </div>
             </div>
