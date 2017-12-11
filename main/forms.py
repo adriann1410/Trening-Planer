@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
+from .models import Comment
 
 
 class LoginForm(forms.Form):
@@ -18,4 +19,3 @@ class LoginForm(forms.Form):
 class UserForm(forms.Form):
     email = forms.EmailField(max_length=100, required=True)
     password = forms.CharField(widget=forms.PasswordInput(), required=True, max_length=100)
-

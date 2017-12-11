@@ -44,7 +44,6 @@ def userProfile(request, some_id):
     if CoachProfile.objects.filter(user_id=some_id).exists():
         coach = CoachProfile.objects.get(user_id=some_id)
         comments = reversed(Comment.objects.filter(user_id=some_id))
-        print(comments)
         return render(request, 'coachProfile.html', {'coach': coach, 'comments': comments})
     elif Profile.objects.filter(user_id=some_id).exists():
         user = Profile.objects.get(user_id=some_id)
@@ -72,7 +71,7 @@ def loginView(request):
     else:
         form = LoginForm()
 
-    return  render(request, "login.html", context={'title':"Login", 'form': form})
+    return render(request, "login.html", context={'title':"Login", 'form': form})
 
 
 def registerView(request):

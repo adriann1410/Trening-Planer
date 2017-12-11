@@ -69,6 +69,16 @@
         </div>
         <br>
         <hr>
+        {% if user.is_authenticated and request.user != coach.profile.user_id %}
+        <div class="row mt-4">
+            <h4>Dodaj komentarz:</h4>
+        </div>
+        <div class="row">
+            <br>
+
+        </div>
+        {% endif %}
+        <hr>
         <div class="row mt-4">
             <h4>Komentarze:</h4>
             <br><br>

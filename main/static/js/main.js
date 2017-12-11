@@ -2,7 +2,6 @@ $('.ratebtn').on('click', function(event){
     event.preventDefault();
     var id = $(this).attr("data-iterator")
     var rate = $('#'+id)
-    console.log(rate);
     $.ajax({
         url : '/rate_coach/',
         type : 'POST',
