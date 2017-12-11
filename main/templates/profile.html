@@ -2,11 +2,52 @@
 {% block content %}
 
     <div class="container">
+        <br><br><br>
         <div class="row">
-            <div class="col-md-6-offset-3">
-                <div class="panel panel-primary">
-                    
-                </div>
+            <div class="col-md-4-offset-2">
+                <img class="mr-3" src="{{ coach.img_url }}" alt="Generic placeholder image" height="90" width="90">
+            </div>
+            <div class="col-md-4">
+                <form method="post">
+                    {% csrf_token %}
+                    <h5>User Data</h5>
+                    <hr>
+                    <div class="form-group row">
+                        <div class="col-sm-10">
+                          Name : {{ user_form.first_name }}
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-10">
+                          Surname : {{ user_form.last_name }}
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Update</button>
+                </form>
+            </div>
+
+            <div class="col-md-4">
+                <form method="post">
+                    {% csrf_token %}
+                    <h5>Factors</h5>
+                    <hr>
+                    <div class="form-group row">
+                        <div class="col-sm-10">
+                          Age : {{ profile_form.old }}
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-10">
+                          Weight(kg) : {{ profile_form.weight }}
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-10">
+                         Height(cm) :  {{ profile_form.height }}
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Update</button>
+                </form>
             </div>
         </div>
     </div>

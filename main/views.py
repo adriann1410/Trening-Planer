@@ -8,7 +8,7 @@ from django.core.mail import send_mail
 from django.conf import  settings
 from django.core.exceptions import ObjectDoesNotExist
 
-from .forms import LoginForm, UserForm
+from .forms import LoginForm, UserForm, UserUpdateForm, ProfileUpdateForm
 from .models import CoachProfile, Profile, Comment
 
 import socket
@@ -58,7 +58,21 @@ def userProfile(request, some_id):
 def userProfileView(request):
     current_user = request.user
     user_profile = current_user.profile
-    return render(request, "profile.html", {'user': current_user, 'user_profile': user_profile})
+
+    if request.method == 'POST':
+        profile_update = ProfileUpdateForm(request.POST, instance=user_profile)
+        user_update = UserUpdateForm(request.POST, instance=current_user)
+
+        if user_update.is_valid():
+            user_update.save()
+
+        if profile_update.is_valid():
+            profile_update.save()
+
+    update_profile_form = ProfileUpdateForm()
+    update_user_form = UserUpdateForm()
+
+    return render(request, "profile.html", {'profile_form': update_profile_form, 'user_form': update_user_form, 'user': current_user, 'user_profile': user_profile})
 
 
 def loginView(request):
