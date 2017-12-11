@@ -8,7 +8,7 @@
                 <div class="col-12 ">
                     <div class="btn-group d-flex justify-content-end">
                         {% if request.user.id == page_user.user_id %}
-                        <button class="btn">edytuj profil</button>
+                            <a href="/profile"><button class="btn">edytuj profil</button></a>
                         {% endif %}
                         <button class="btn">wiadomość</button>
                         <button class="btn">jakis przycisk</button>
