@@ -8,7 +8,7 @@ from django.core.mail import send_mail
 from django.conf import  settings
 from django.core.exceptions import ObjectDoesNotExist
 
-from .forms import LoginForm, UserForm
+from .forms import LoginForm, UserForm, UserUpdateForm, ProfileUpdateForm
 from .models import CoachProfile, Profile, Comment
 
 import socket
@@ -16,6 +16,8 @@ import socket
 
 # Create your views here.
 def index(request):
+    if request.user.is_authenticated:
+        return redirect(to=userProfileView)
     return render(request, "index.html", context={'title':"Index"})
 
 def coachesList(request):
@@ -51,6 +53,26 @@ def userProfile(request, some_id):
     else:
         return HttpResponse("Użytkownik nie istnieje")
 
+@login_required
+def userProfileView(request):
+    current_user = request.user
+    user_profile = current_user.profile
+
+    if request.method == 'POST':
+        profile_update = ProfileUpdateForm(request.POST, instance=user_profile)
+        user_update = UserUpdateForm(request.POST, instance=current_user)
+
+        if user_update.is_valid():
+            user_update.save()
+
+        if profile_update.is_valid():
+            profile_update.save()
+
+    update_profile_form = ProfileUpdateForm()
+    update_user_form = UserUpdateForm()
+
+    return render(request, "profile.html", {'profile_form': update_profile_form, 'user_form': update_user_form, 'user': current_user, 'user_profile': user_profile})
+
 
 def loginView(request):
     if request.method == 'POST':
@@ -64,7 +86,8 @@ def loginView(request):
 
             if not user.check_password(password):
                 message = "Password is not correct"
-                return render(request, "login.html", context={'title':"Login", 'form': form, 'message': message})
+                message_type = "success"
+                return render(request, "login.html", context={'title':"Login", 'form': form, 'message': message, 'message_type': message_type})
 
             login(request, user)
             return redirect(index)
@@ -83,7 +106,8 @@ def registerView(request):
                 user = User.objects.get(email=cd.get('email'))
                 if user:
                     message = "Email already in use xd"
-                    return render(request, "register.html", context={'title': "Register", 'form': form, 'message':message})
+                    message_type = "danger"
+                    return render(request, "register.html", context={'title': "Register", 'form': form, 'message':message, 'message_type': message_type})
             except User.DoesNotExist as e:
                 pass
             password = make_password(cd.get('password'))
@@ -93,8 +117,14 @@ def registerView(request):
             subject = "Dziękujemy za rejestrację w Planer"
             mail_message = "Tutaj bedzie link do potwierdzenia konta"
             # socket.getaddrinfo('127.0.0.1', 8000)
-            send_mail(subject, mail_message, settings.EMAIL_HOST_USER, [cd.get('email')], fail_silently=True)
-
+            try:
+                send_mail(subject, mail_message, settings.EMAIL_HOST_USER, [cd.get('email')], fail_silently=True)
+            except Exception as e:
+                pass
+            else:
+                message = "Confirmation mail has been send"
+                message_type = "success"
+                return render(request, "register.html", context={'title': "Register", 'form': form, 'message': message, 'message_type': message_type})
     else:
         form = UserForm
     return render(request, "register.html", context={'title':"Register", 'form': form})
