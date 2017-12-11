@@ -37,8 +37,10 @@
           <a class="nav-link nav-item" href="#" style="color: gainsboro">{{ user.email }}</a>
           <h5><a class="nav-link" href={% url 'logout' %}><span class="badge badge-secondary">Wyloguj</span></a></h5>
             {% else %}
-          <h5><a class="nav-link" href={% url 'login' %}><span class="badge badge-secondary">Zaloguj</span></a></h5>
+          <span class="badge badge-secondary"><a class="nav-link" href={% url 'register' %}>Rejestracja</a></span>|
+          <span class="badge badge-secondary"><a class="nav-link" href={% url 'login' %}>Zaloguj</a></span>
         {% endif %}
+      </span>
   </div>
 </nav>
 {% load static %}

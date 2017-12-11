@@ -65,7 +65,8 @@ def loginView(request):
 
             if not user.check_password(password):
                 message = "Password is not correct"
-                return render(request, "login.html", context={'title':"Login", 'form': form, 'message': message})
+                message_type = "success"
+                return render(request, "login.html", context={'title':"Login", 'form': form, 'message': message, 'message_type': message_type})
 
             login(request, user)
             return redirect(index)
@@ -84,7 +85,8 @@ def registerView(request):
                 user = User.objects.get(email=cd.get('email'))
                 if user:
                     message = "Email already in use xd"
-                    return render(request, "register.html", context={'title': "Register", 'form': form, 'message':message})
+                    message_type = "danger"
+                    return render(request, "register.html", context={'title': "Register", 'form': form, 'message':message, 'message_type': message_type})
             except User.DoesNotExist as e:
                 pass
             password = make_password(cd.get('password'))
@@ -94,8 +96,14 @@ def registerView(request):
             subject = "Dziękujemy za rejestrację w Planer"
             mail_message = "Tutaj bedzie link do potwierdzenia konta"
             # socket.getaddrinfo('127.0.0.1', 8000)
-            send_mail(subject, mail_message, settings.EMAIL_HOST_USER, [cd.get('email')], fail_silently=True)
-
+            try:
+                send_mail(subject, mail_message, settings.EMAIL_HOST_USER, [cd.get('email')], fail_silently=True)
+            except Exception as e:
+                pass
+            else:
+                message = "Confirmation mail has been send"
+                message_type = "success"
+                return render(request, "register.html", context={'title': "Register", 'form': form, 'message': message, 'message_type': message_type})
     else:
         form = UserForm
     return render(request, "register.html", context={'title':"Register", 'form': form})

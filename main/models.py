@@ -15,7 +15,7 @@ class Profile(models.Model):
 
 
 class CoachProfile(models.Model):
-    profile = models.OneToOneField(Profile, on_delete=models.CASCADE)
+    profile = models.OneToOneField(Profile, on_delete=models.CASCADE, default=None)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     description = models.TextField(max_length=500)
     rate = models.FloatField(default=0)
