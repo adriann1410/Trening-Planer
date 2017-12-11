@@ -16,6 +16,8 @@ import socket
 
 # Create your views here.
 def index(request):
+    if request.user.is_authenticated:
+        return redirect(to=userProfileView)
     return render(request, "index.html", context={'title':"Index"})
 
 def coachesList(request):
@@ -51,6 +53,12 @@ def userProfile(request, some_id):
         return render(request, "userProfile.html", {'page_user': user})
     else:
         return HttpResponse("Użytkownik nie istnieje")
+
+@login_required
+def userProfileView(request):
+    current_user = request.user
+    user_profile = current_user.profile
+    return render(request, "profile.html", {'user': current_user, 'user_profile': user_profile})
 
 
 def loginView(request):
