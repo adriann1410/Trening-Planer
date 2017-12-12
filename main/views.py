@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, reverse
 from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
@@ -17,7 +17,7 @@ import socket
 # Create your views here.
 def index(request):
     if request.user.is_authenticated:
-        return redirect(to=userProfileView)
+        return redirect(to=userProfile, pk=request.user.id) # reverse
     return render(request, "index.html", context={'title':"Index"})
 
 def coachesList(request):
@@ -41,10 +41,12 @@ def rate_coach(request):
     return HttpResponse(currentrate)
 
 
-def userProfile(request, some_id):
+<<<<<<< HEAD
+def userProfile(request, pk):
+
     if request.method == 'POST':
         initial_data = {
-            "coach_id": some_id,
+            "coach_id": ok,
             "author_id": request.user.id
         }
         form = CommentForm(request.POST, initial=initial_data)
@@ -54,19 +56,24 @@ def userProfile(request, some_id):
             print(form.cleaned_data)
         return redirect('./')
     else:
-        if CoachProfile.objects.filter(user_id=some_id).exists():
+        user = User.objects.get(id=pk)
+
+        if not user:
+            return redirect(to=pageNotFound)
+
+        profile = user.profile
+
+        if profile.isCoach:
                 form = CommentForm()
-                coach = CoachProfile.objects.get(user_id=some_id)
-                comments = reversed(Comment.objects.filter(user_id=some_id))
+                coach = CoachProfile.objects.get(user_id=pk)
+                comments = reversed(Comment.objects.filter(user_id=pk))
                 return render(request, 'coachProfile.html', {'coach': coach, 'comments': comments, 'form': form})
-        elif Profile.objects.filter(user_id=some_id).exists():
-            user = Profile.objects.get(user_id=some_id)
-            return render(request, "userProfile.html", {'page_user': user})
         else:
-            return HttpResponse("Użytkownik nie istnieje")
+            return render(request, "userProfile.html", {'page_user': profile})
+
 
 @login_required
-def userProfileView(request):
+def userProfileEdit(request):
     current_user = request.user
     user_profile = current_user.profile
 
@@ -141,6 +148,9 @@ def registerView(request):
         form = UserForm
     return render(request, "register.html", context={'title':"Register", 'form': form})
 
+
+def pageNotFound(request):
+    return render(request, '404page.html')
 
 @login_required
 def users(request):
