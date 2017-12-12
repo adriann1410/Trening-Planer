@@ -7,6 +7,7 @@ import datetime
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    isCoach = models.BooleanField(default=False)
     old = models.IntegerField(default=0)
     height = models.IntegerField(default=0)
     weight = models.IntegerField(default=0)
@@ -16,7 +17,8 @@ class Profile(models.Model):
 
 
 class CoachProfile(models.Model):
-    profile = models.OneToOneField(Profile, on_delete=models.CASCADE, default=None)
+    #profile = models.OneToOneField(Profile, on_delete=models.CASCADE, default=None)  # Useless
+    # pupils = models.OneToManyField(User)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     description = models.TextField(max_length=500)
     rate = models.FloatField(default=0)
@@ -25,7 +27,7 @@ class CoachProfile(models.Model):
     img_url = models.CharField(max_length=250, default="./static/img/default_user.png") #do zmiany przy uploadowaniu wlasnych plikow
 
     def __str__(self):
-        return self.profile.user.username
+        return self.user.username
 
 
 class Comment(models.Model):
