@@ -3,6 +3,7 @@
 
 {% block content %}
 <div class = "container">
+    {% if coaches %}
     {% for coach in coaches %}
         <div class = "mt-4">
             <div class = "jumbotron">
@@ -31,5 +32,20 @@
             </div>
         </div>
     {% endfor %}
+    {% else %}
+
+        <br>
+        <br>
+            <div class="row">
+                <div class="col-md-4-offset-6">
+                    <div class="jumbotron jumbotron-fluid">
+                      <div class="container">
+                        <h1 class="display-3">Przepraszamy</h1>
+                        <p class="lead">Na obecną chwile brak trenerów w twojej okolicy.</p>
+                      </div>
+                    </div>
+                </div>
+            </div>
+    {% endif %}
 </div>
 {% endblock %}
