@@ -7,6 +7,7 @@ from django.contrib.auth.hashers import make_password
 from django.core.mail import send_mail
 from django.conf import  settings
 from django.core.exceptions import ObjectDoesNotExist
+import datetime
 
 from .forms import LoginForm, UserForm, UserUpdateForm, ProfileUpdateForm, CommentForm
 from .models import CoachProfile, Profile, Comment
@@ -22,7 +23,7 @@ def index(request):
 
 def coachesList(request):
     coaches = CoachProfile.objects.all()
-    return render(request, "coaches.html", {'coaches':coaches})
+    return render(request, "coaches.html", {'coaches': coaches})
 
 def rate_coach(request):
     coach_id = request.POST.get('coach_id', None)
@@ -41,19 +42,19 @@ def rate_coach(request):
     return HttpResponse(currentrate)
 
 
-<<<<<<< HEAD
 def userProfile(request, pk):
 
     if request.method == 'POST':
-        initial_data = {
-            "coach_id": ok,
-            "author_id": request.user.id
-        }
-        form = CommentForm(request.POST, initial=initial_data)
-        print("form is valid", form.is_valid())
+        form = CommentForm(request.POST)
+
         if form.is_valid():
-            print("poszlo")
-            print(form.cleaned_data)
+            new_comment = Comment(
+                                user=User.objects.get(id=pk),
+                                author=request.user,
+                                content=form.cleaned_data.get("content"),
+                                commentRate="5"
+                                )
+            new_comment.save()
         return redirect('./')
     else:
         user = User.objects.get(id=pk)

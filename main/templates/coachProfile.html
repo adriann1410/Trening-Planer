@@ -34,7 +34,7 @@
                         Wiek:
                     </div>
                     <div class="col-sm-6 attribute_value">
-                        {{ coach.profile.old }}
+                        {{ coach.user.profile.old }}
                     </div>
 
                 </div>
@@ -44,7 +44,7 @@
                         Wzrost:
                     </div>
                     <div class="col-sm-6 attribute_value">
-                        {{ coach.profile.height }}
+                        {{ coach.user.profile.height }}
                     </div>
                 </div>
                 <hr class="detail_row">
@@ -53,7 +53,7 @@
                         Waga:
                     </div>
                     <div class="col-sm-6 attribute_value">
-                        {{ coach.profile.weight }}
+                        {{ coach.user.profile.weight }}
                     </div>
                 </div>
                 <hr class="detail_row">
@@ -62,7 +62,7 @@
                        Na stronie od:
                     </div>
                     <div class="col-sm-6 attribute_value">
-                        {{ coach.profile.user.date_joined.date }}
+                        {{ coach.user.date_joined.date }}
                     </div>
                 </div>
             </div>
@@ -90,19 +90,22 @@
             <br><br>
         </div>
         {% for comment in comments %}
-        <div class="row">
+        <div class="row border border-secondary rounded mt-1">
             <div class="col-2">
                 <h5>{{ comment.author }}</h5>
                 <tag><small>{{ comment.date }}</small></tag>
             </div>
-            <div class="col-6">
+            <div class="col-9">
                 <br>
                 {{ comment.content | linebreaks }}
+            </div>
+            <div class="col-1">
+                <p>ocena:</p>
+                <h5>{{ comment.commentRate }}/5</h5>
             </div>
         </div>
         {% endfor %}
 
     </div>
-
 {% endblock %}
 

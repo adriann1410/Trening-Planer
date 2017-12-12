@@ -27,6 +27,6 @@ class ProfileUpdateForm(forms.ModelForm):
 
 
 class CommentForm(forms.Form):
-    coach_id = forms.IntegerField(widget=forms.HiddenInput)
-    author_id = forms.IntegerField(widget=forms.HiddenInput)
     content = forms.CharField(widget=forms.Textarea, label="")
+    commentRate = forms.IntegerField(label="Ocena:")
+
