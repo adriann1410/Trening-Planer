@@ -8,7 +8,7 @@ from django.core.mail import send_mail
 from django.conf import  settings
 from django.core.exceptions import ObjectDoesNotExist
 
-from .forms import LoginForm, UserForm, UserUpdateForm, ProfileUpdateForm
+from .forms import LoginForm, UserForm, UserUpdateForm, ProfileUpdateForm, CommentForm
 from .models import CoachProfile, Profile, Comment
 
 import socket
@@ -29,7 +29,7 @@ def rate_coach(request):
     rate = request.POST.get('rate', None)
 
     currentrate = 0
-    if (coach_id):
+    if coach_id:
         coach = CoachProfile.objects.get(user_id=int(coach_id))
         if coach is not None:
             coachrates = coach.rate_counter + 1
@@ -42,16 +42,28 @@ def rate_coach(request):
 
 
 def userProfile(request, some_id):
-
-    if CoachProfile.objects.filter(user_id=some_id).exists():
-        coach = CoachProfile.objects.get(user_id=some_id)
-        comments = reversed(Comment.objects.filter(user_id=some_id))
-        return render(request, 'coachProfile.html', {'coach': coach, 'comments': comments})
-    elif Profile.objects.filter(user_id=some_id).exists():
-        user = Profile.objects.get(user_id=some_id)
-        return render(request, "userProfile.html", {'page_user': user})
+    if request.method == 'POST':
+        initial_data = {
+            "coach_id": some_id,
+            "author_id": request.user.id
+        }
+        form = CommentForm(request.POST, initial=initial_data)
+        print("form is valid", form.is_valid())
+        if form.is_valid():
+            print("poszlo")
+            print(form.cleaned_data)
+        return redirect('./')
     else:
-        return HttpResponse("Użytkownik nie istnieje")
+        if CoachProfile.objects.filter(user_id=some_id).exists():
+                form = CommentForm()
+                coach = CoachProfile.objects.get(user_id=some_id)
+                comments = reversed(Comment.objects.filter(user_id=some_id))
+                return render(request, 'coachProfile.html', {'coach': coach, 'comments': comments, 'form': form})
+        elif Profile.objects.filter(user_id=some_id).exists():
+            user = Profile.objects.get(user_id=some_id)
+            return render(request, "userProfile.html", {'page_user': user})
+        else:
+            return HttpResponse("Użytkownik nie istnieje")
 
 @login_required
 def userProfileView(request):

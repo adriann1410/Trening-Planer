@@ -25,3 +25,8 @@ class ProfileUpdateForm(forms.ModelForm):
         model = Profile
         fields = ['old', 'weight', 'height']
 
+
+class CommentForm(forms.Form):
+    coach_id = forms.IntegerField(widget=forms.HiddenInput)
+    author_id = forms.IntegerField(widget=forms.HiddenInput)
+    content = forms.CharField(widget=forms.Textarea, label="")
