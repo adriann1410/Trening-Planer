@@ -45,6 +45,12 @@
                          {% else %}
                         <img src="{{ media }}profile_image/profile-placeholder.png" width="250" height="250">
                         {% endif %}
+                        <br><br>
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ image_form.image }}<br><br>
+                    <button type="submit" class="btn btn-primary">Update</button>
+                </form>
             </div>
             <div class="col-md-4">
                 <form method="post">

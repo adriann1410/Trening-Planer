@@ -26,6 +26,12 @@ class ProfileUpdateForm(forms.ModelForm):
         fields = ['old', 'weight', 'height']
 
 
+class ProfileImageForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['image']
+
+
 class CommentForm(forms.Form):
     content = forms.CharField(widget=forms.Textarea, label="")
     commentRate = forms.IntegerField(label="Ocena:")
