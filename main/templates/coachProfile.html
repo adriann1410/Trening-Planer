@@ -6,14 +6,20 @@
     <div class="container">
         <div class="row">
                 <div class="col-12 ">
-                    <div class="btn-group d-flex justify-content-end">
-                        {% if request.user.id == coach.profile.user_id %}
-                            <a href="{% url 'editProfile' %}"><button class="btn">edytuj profil</button></a>
-                        {% else %}
-                        <button class="btn">wiadomość</button>
-                        <button class="btn">nawiąż współpracę</button>
+
+                    <ul class="nav justify-content-end nav-tabs">
+                        {% if request.user.is_authenticated %}
+                            <li class="nav-item">
+                                <a class="nav-link" href={% url 'userProfile' pk=request.user.id %}>Mój Profil</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link " href="#">Wyślij wiadomość</a>
+                            </li>
                         {% endif %}
-                    </div>
+
+                    </ul>
+
                 </div>
             <br><br>
         </div>
