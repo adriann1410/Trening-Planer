@@ -39,7 +39,12 @@
 
             <div class="row mt-5">
             <div class="col-md-4-offset-2">
-                <img class="mr-3" src="{{ coach.img_url }}" alt="Generic placeholder image" height="90" width="90">
+                <h3>{{ user.first_name }} {{ user.last_name }}</h3>
+                {% if user.profile.image %}
+                        <img src="{{ user.profile.image.url }}" width="250" height="250">
+                         {% else %}
+                        <img src="{{ media }}profile_image/profile-placeholder.png" width="250" height="250">
+                        {% endif %}
             </div>
             <div class="col-md-4">
                 <form method="post">

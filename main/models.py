@@ -11,6 +11,8 @@ class Profile(models.Model):
     old = models.IntegerField(default=0)
     height = models.IntegerField(default=0)
     weight = models.IntegerField(default=0)
+    image = models.ImageField(upload_to='profile_image', blank=True)
+
 
     def __str__(self):
         return self.user.username
@@ -24,7 +26,7 @@ class CoachProfile(models.Model):
     rate = models.FloatField(default=0)
     rate_sum = models.IntegerField(default=0)
     rate_counter = models.IntegerField(default=0)
-    img_url = models.CharField(max_length=250, default="./static/img/default_user.png") #do zmiany przy uploadowaniu wlasnych plikow
+    #img_url = models.CharField(max_length=250, default="./static/img/default_user.png") #do zmiany przy uploadowaniu wlasnych plikow
 
     def __str__(self):
         return self.user.username

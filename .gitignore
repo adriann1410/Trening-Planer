@@ -60,7 +60,7 @@ crashlytics-build.properties
 fabric.properties
 
 .idea
-
+media
 db.sqlite3
 
 *.egg-info

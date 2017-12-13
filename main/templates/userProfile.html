@@ -40,10 +40,16 @@
         <div class="row mt-5">
             <div class="col-md-8 col-sm-12">
                 <h3>{{ page_user.user.first_name }} {{ page_user.user.last_name }}</h3>
+                {% if page_user.user.profile.image %}
+                        <img src="{{ page_user.user.profile.image.url }}" width="250" height="250">
+                         {% else %}
+                        <img src="{{ media }}profile_image/profile-placeholder.png" width="250" height="250">
+                        {% endif %}
             </div>
             <div class="col-md-4 col-sm-12">
                 <h5>Podstawowe informacje:</h5>
                 <div class="row">
+
                     <div class="col-sm-5 attribute_name">
                         Wiek:
                     </div>
