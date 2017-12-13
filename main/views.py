@@ -41,6 +41,10 @@ def rate_coach(request):
             coach.save()
     return HttpResponse(currentrate)
 
+@login_required
+def createCoachProfile(request):
+    return render(request, 'become_coach.html')
+
 
 def userProfile(request, pk):
 
@@ -49,10 +53,10 @@ def userProfile(request, pk):
 
         if form.is_valid():
             new_comment = Comment(
-                                user=User.objects.get(id=pk),
+                                coach=User.objects.get(id=pk).coachprofile,
                                 author=request.user,
                                 content=form.cleaned_data.get("content"),
-                                commentRate="5"
+                                commentRate= form.cleaned_data.get("commentRate")
                                 )
             new_comment.save()
         return redirect('./')
@@ -66,8 +70,8 @@ def userProfile(request, pk):
 
         if profile.isCoach:
                 form = CommentForm()
-                coach = CoachProfile.objects.get(user_id=pk)
-                comments = reversed(Comment.objects.filter(user_id=pk))
+                coach = user.coachprofile
+                comments = reversed(coach.comments.all())
                 return render(request, 'coachProfile.html', {'coach': coach, 'comments': comments, 'form': form})
         else:
             return render(request, "userProfile.html", {'page_user': profile})
@@ -100,7 +104,7 @@ def userProfileEdit(request):
     update_user_form = UserUpdateForm()
     profile_image_form = ProfileImageForm()
 
-    return render(request, "profile.html", {'image_form': profile_image_form, 'profile_form': update_profile_form, 'user_form': update_user_form, 'user': current_user, 'user_profile': user_profile, 'edit': True})
+    return render(request, "profile.html", {'image_form': profile_image_form, 'profile_form': update_profile_form, 'user_form': update_user_form, 'user': current_user, 'user_profile': user_profile})
 
 
 def loginView(request):

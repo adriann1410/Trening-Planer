@@ -34,5 +34,5 @@ class ProfileImageForm(forms.ModelForm):
 
 class CommentForm(forms.Form):
     content = forms.CharField(widget=forms.Textarea, label="")
-    commentRate = forms.IntegerField(label="Ocena:")
+    commentRate = forms.DecimalField(label="Ocena:", max_value=5, min_value=0, max_digits=2, decimal_places=1)
 

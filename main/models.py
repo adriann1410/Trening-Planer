@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.dispatch import receiver
 from django.db.models.signals import post_save
+from django.core.validators import MaxValueValidator, MinValueValidator
 import datetime
 
 
@@ -23,9 +24,9 @@ class CoachProfile(models.Model):
     # pupils = models.OneToManyField(User)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     description = models.TextField(max_length=500)
-    rate = models.FloatField(default=0)
-    rate_sum = models.IntegerField(default=0)
-    rate_counter = models.IntegerField(default=0)
+    #rate = models.FloatField(default=0)
+    #rate_sum = models.IntegerField(default=0)
+    #rate_counter = models.IntegerField(default=0)
     #img_url = models.CharField(max_length=250, default="./static/img/default_user.png") #do zmiany przy uploadowaniu wlasnych plikow
 
     def __str__(self):
@@ -33,11 +34,12 @@ class CoachProfile(models.Model):
 
 
 class Comment(models.Model):
-    user = models.ForeignKey(User, related_name='get_comment', verbose_name=("coach"))
+    coach = models.ForeignKey(CoachProfile, related_name='comments', verbose_name=("Coach"), default=None)
+    # user = models.ForeignKey(User, related_name='get_comment', verbose_name=("coach"))
     author = models.ForeignKey(User, related_name='sent_comment', verbose_name=("author"))
     date = models.DateField(default=datetime.date.today)
     content = models.TextField(max_length=500)
-    commentRate = models.IntegerField(default=0)
+    commentRate = models.DecimalField(max_digits=2, decimal_places=1, validators=[MinValueValidator(0), MaxValueValidator(5)])
 
     def __str__(self):
         return str(self.id)

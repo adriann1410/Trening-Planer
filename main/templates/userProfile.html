@@ -28,7 +28,7 @@
                         {% endif %}
                         {% if request.user.id == page_user.user_id %}
                             <li class="nav-item">
-                                <a class="nav-link " href="#">Zostań Trenerem</a>
+                                <a class="nav-link " href={% url 'become_coach' %}>Zostań Trenerem</a>
                             </li>
                         {% endif %}
                     </ul>

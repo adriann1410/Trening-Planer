@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block content %}
+
+     <div class="container">
+             <div class="row">
+                <div class="col-12 ">
+
+                    <ul class="nav justify-content-end nav-tabs">
+                            <li class="nav-item">
+                                <a class="nav-link {% if request.user.id == page_user.user_id %}active{% endif %}" href={% url 'userProfile' pk=request.user.id %}>Mój Profil</a>
+                            </li>
+                        {% if request.user.id != page_user.user_id%}
+
+                        {% else %}
+                            <li class="nav-item">
+                                <a class="nav-link" href={% url 'editProfile' %}>Opcje</a>
+                            </li>
+                        {% endif %}
+                        {% if request.user.id != page_user.user_id %}
+                            <li class="nav-item">
+                                <a class="nav-link " href="#">Wyślij wiadomość</a>
+                            </li>
+                        {% else %}
+                            <li class="nav-item">
+                                <a class="nav-link " href="#">Wiadomości</a>
+                            </li>
+                        {% endif %}
+                            <li class="nav-item">
+                                <a class="nav-link active" href={% url 'become_coach' %}>Zostań Trenerem</a>
+                            </li>
+                    </ul>
+                </div>
+            <br><br>
+
+
+
+        </div>
+     </div>
+
+
+{% endblock %}
