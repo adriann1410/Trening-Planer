@@ -2,8 +2,42 @@
 {% block content %}
 
     <div class="container">
-        <br><br><br>
-        <div class="row">
+             <div class="row">
+                <div class="col-12 ">
+
+                    <ul class="nav justify-content-end nav-tabs">
+                            <li class="nav-item">
+                                <a class="nav-link {% if request.user.id == page_user.user_id %}active{% endif %}" href={% url 'userProfile' pk=request.user.id %}>Mój Profil</a>
+                            </li>
+                        {% if request.user.id == page_user.user_id%}
+                            <li class="nav-item">
+                                <a class="nav-link" href={% url 'editProfile' %}>Opcje</a>
+                            </li>
+                        {% elif edit %}
+                            <li class="nav-item">
+                                <a class="nav-link active" href={% url 'editProfile' %}>Opcje</a>
+                            </li>
+                        {% endif %}
+                        {% if request.user.id == page_user.user_id %}
+                            <li class="nav-item">
+                                <a class="nav-link " href="#">Wiadomości</a>
+                            </li>
+                        {% else %}
+                            <li class="nav-item">
+                                <a class="nav-link " href="#">Wyślij wiadomość</a>
+                            </li>
+                        {% endif %}
+                        {% if request.user.id == page_user.user_id %}
+                            <li class="nav-item">
+                                <a class="nav-link " href="#">Zostań Trenerem</a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            <br><br>
+        </div>
+
+            <div class="row mt-5">
             <div class="col-md-4-offset-2">
                 <img class="mr-3" src="{{ coach.img_url }}" alt="Generic placeholder image" height="90" width="90">
             </div>

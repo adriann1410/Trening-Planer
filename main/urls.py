@@ -9,6 +9,7 @@ urlpatterns = [
     url(r'^coaches$', views.coachesList, name = "coaches"),
     url(r'^rate_coach/$', views.rate_coach, name="rate_coach"),
     url(r'^register$', views.registerView, name="register"),
+    url(r'^register/coach', views.registerView, name="register_coach"),
     url(r'^user/edit$', views.userProfileEdit, name='editProfile'),
     url(r'^user/(?P<pk>[0-9]+)/$', views.userProfile, name="userProfile")
 ]

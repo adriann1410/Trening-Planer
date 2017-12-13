@@ -91,7 +91,7 @@ def userProfileEdit(request):
     update_profile_form = ProfileUpdateForm()
     update_user_form = UserUpdateForm()
 
-    return render(request, "profile.html", {'profile_form': update_profile_form, 'user_form': update_user_form, 'user': current_user, 'user_profile': user_profile})
+    return render(request, "profile.html", {'profile_form': update_profile_form, 'user_form': update_user_form, 'user': current_user, 'user_profile': user_profile, 'edit': True})
 
 
 def loginView(request):
@@ -142,7 +142,7 @@ def registerView(request):
             except Exception as e:
                 pass
             else:
-                message = "Confirmation mail has been send"
+                message = "Confirmation mail has been send, you can now login"
                 message_type = "success"
                 return render(request, "register.html", context={'title': "Register", 'form': form, 'message': message, 'message_type': message_type})
     else:

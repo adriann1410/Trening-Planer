@@ -3,20 +3,40 @@
 {% block content %}
 
     <div class="container">
+
         <div class="row">
 
                 <div class="col-12 ">
-                    <div class="btn-group d-flex justify-content-end">
+
+                    <ul class="nav justify-content-end nav-tabs">
+                            <li class="nav-item">
+                                <a class="nav-link {% if request.user.id == page_user.user_id %}active{% endif %}" href={% url 'userProfile' pk=request.user.id %}>Mój Profil</a>
+                            </li>
                         {% if request.user.id == page_user.user_id %}
-                            <a href={% url 'editProfile' %}><button class="btn">edytuj profil</button></a>
+                            <li class="nav-item">
+                                <a class="nav-link" href={% url 'editProfile' %}>Opcje</a>
+                            </li>
                         {% endif %}
-                        <button class="btn">wiadomość</button>
-                        <button class="btn">jakis przycisk</button>
-                    </div>
+                        {% if request.user.id == page_user.user_id %}
+                            <li class="nav-item">
+                                <a class="nav-link " href="#">Wiadomości</a>
+                            </li>
+                        {% else %}
+                            <li class="nav-item">
+                                <a class="nav-link " href="#">Wyślij wiadomość</a>
+                            </li>
+                        {% endif %}
+                        {% if request.user.id == page_user.user_id %}
+                            <li class="nav-item">
+                                <a class="nav-link " href="#">Zostań Trenerem</a>
+                            </li>
+                        {% endif %}
+                    </ul>
                 </div>
             <br><br>
 
         </div>
+
         <div class="row mt-5">
             <div class="col-md-8 col-sm-12">
                 <h3>{{ page_user.user.first_name }} {{ page_user.user.last_name }}</h3>
