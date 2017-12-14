@@ -1,3 +1,4 @@
+from django.db.models import Avg
 from django.shortcuts import render, redirect, reverse
 from django.http import HttpResponse
 from django.contrib.auth.models import User
@@ -21,9 +22,17 @@ def index(request):
         return redirect(to=userProfile, pk=request.user.id) # reverse
     return render(request, "index.html", context={'title':"Index"})
 
+
 def coachesList(request):
+    avg_rates = {}
     coaches = CoachProfile.objects.all()
-    return render(request, "coaches.html", {'coaches': coaches})
+    for coachh in coaches:
+        average_rate = Comment.objects.filter(coach_id=coachh.id).aggregate(Avg('commentRate'))
+        avg_rates[coachh.user.id] = average_rate['commentRate__avg']
+
+
+    return render(request, "coaches.html", {'coaches': coaches, 'avg_rates': avg_rates})
+
 
 def rate_coach(request):
     coach_id = request.POST.get('coach_id', None)
