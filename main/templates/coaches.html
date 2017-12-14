@@ -9,7 +9,11 @@
             <div class = "jumbotron">
                 <div class="media">
                     <a href="/user/{{ coach.user_id }}" style="color: inherit">
-                    <img class="mr-3" src="{{ coach.img_url }}" alt="Generic placeholder image" height="90" width="90"></a>
+                    {% if coach.user.profile.image %}
+                    <img class="mr-3" src="{{ coach.user.profile.image.url }}" width="120" height="120">
+                     {% else %}
+                    <img class="mr-3" src="{{ media }}profile_image/profile-placeholder.png" width="120" height="120">
+                    {% endif %}</a>
                      <div class="media-body">
                      <a href="/user/{{ coach.user_id }}" style="color: inherit">
                      <h5 class="mt-0">{{ coach.user.first_name }} {{ coach.user.last_name }}</h5></a>

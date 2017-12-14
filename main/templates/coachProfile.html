@@ -26,10 +26,14 @@
         <div class="row mt-5">
             <div class="col-md-8 col-sm-12">
                 <div class="media">
-                <img class="mr-3" src="../../{{coach.img_url}}" alt="Generic placeholder image" height="120" width="120">
-                     <div class="media-body">
-                     <h4>{{ coach.profile.user.first_name }} {{ coach.profile.user.last_name }}</h4>
-                         <p>{{ coach.description | linebreaks }}</p>
+                    {% if coach.user.profile.image %}
+                    <img src="{{ coach.user.profile.image.url }}" width="120" height="120">
+                     {% else %}
+                    <img src="{{ media }}profile_image/profile-placeholder.png" width="120" height="120">
+                    {% endif %}
+                     <div class="media-body ml-4">
+                     <h4>{{ coach.user.first_name }} {{ coach.user.last_name }}</h4>
+                         <p class="ml-4">{{ coach.description | linebreaks }}</p>
                      </div>
                 </div>
             </div>
@@ -75,7 +79,7 @@
         </div>
         <br>
         <hr>
-        {% if user.is_authenticated and request.user != coach.profile.user_id %}
+        {% if user.is_authenticated and request.user != coach.user.id %}
         <div class="row mt-4">
             <h4>Dodaj komentarz:</h4>
         </div>
