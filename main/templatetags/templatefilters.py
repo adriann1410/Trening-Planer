@@ -11,6 +11,6 @@ def placeholder_image(value):
     return os.path.join(value, settings.PLACEHOLDER_IMAGE_PATH)
 
 @register.filter
-def form_label(value, prefix=" :"):
+def form_label(value, prefix=":"):
     return str(value+prefix)
 

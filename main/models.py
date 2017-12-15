@@ -20,14 +20,9 @@ class Profile(models.Model):
 
 
 class CoachProfile(models.Model):
-    #profile = models.OneToOneField(Profile, on_delete=models.CASCADE, default=None)  # Useless
     # pupils = models.OneToManyField(User)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     description = models.TextField(max_length=500)
-    #rate = models.FloatField(default=0)
-    #rate_sum = models.IntegerField(default=0)
-    #rate_counter = models.IntegerField(default=0)
-    #img_url = models.CharField(max_length=250, default="./static/img/default_user.png") #do zmiany przy uploadowaniu wlasnych plikow
 
     def __str__(self):
         return self.user.username
@@ -35,7 +30,6 @@ class CoachProfile(models.Model):
 
 class Comment(models.Model):
     coach = models.ForeignKey(CoachProfile, related_name='comments', verbose_name=("Coach"), default=None)
-    # user = models.ForeignKey(User, related_name='get_comment', verbose_name=("coach"))
     author = models.ForeignKey(User, related_name='sent_comment', verbose_name=("author"))
     date = models.DateField(default=datetime.date.today)
     content = models.TextField(max_length=500)
@@ -78,6 +72,7 @@ class Message(models.Model):
     author = models.ForeignKey(User, related_name='sent_messages', verbose_name=("Sender"))
     receiver = models.ForeignKey(User, related_name='received_messages', verbose_name=("Reveiver"))
     content = models.TextField(max_length=500)
+    read = models.BooleanField(default=False)
     date = models.DateField()
 
     def __str__(self):

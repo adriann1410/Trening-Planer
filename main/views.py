@@ -34,7 +34,7 @@ def coachesList(request):
     return render(request, "coaches.html", {'coaches': coaches, 'avg_rates': avg_rates})
 
 
-def rate_coach(request):
+def rate_coach(request):    # Potrzebne to jeszcze ?
     coach_id = request.POST.get('coach_id', None)
     rate = request.POST.get('rate', None)
 
