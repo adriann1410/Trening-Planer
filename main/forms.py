@@ -33,6 +33,12 @@ class ProfileImageForm(forms.ModelForm):
 
 
 class CommentForm(forms.Form):
-    content = forms.CharField(widget=forms.Textarea, label="")
-    commentRate = forms.DecimalField(label="Ocena:", max_value=5, min_value=0, max_digits=2, decimal_places=1)
-
+    content = forms.CharField(widget=forms.Textarea(attrs={'rows': 4, 'cols': 120, 'class': 'form-control col-md-8 col-sm-12 mr-4'}), label="")
+    commentRate = forms.DecimalField(widget=forms.Select(
+                                     choices=(('5', 5), ('4', 4), ('3', 3), ('2', 2), ('1', 1)),
+                                     attrs={'class': 'form-control col-md-1 col-sm-12 ml-2'}),
+                                     label="Ocena:",
+                                     max_value=5,
+                                     min_value=0,
+                                     max_digits=2,
+                                     decimal_places=1)
