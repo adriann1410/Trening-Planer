@@ -113,7 +113,7 @@ def userProfileEdit(request):
     update_user_form = UserUpdateForm()
     profile_image_form = ProfileImageForm()
 
-    return render(request, "profile.html", {'image_form': profile_image_form, 'profile_form': update_profile_form, 'user_form': update_user_form, 'user': current_user, 'user_profile': user_profile})
+    return render(request, "profile_edit.html", {'image_form': profile_image_form, 'profile_form': update_profile_form, 'user_form': update_user_form, 'user': current_user, 'user_profile': user_profile})
 
 
 def loginView(request):
