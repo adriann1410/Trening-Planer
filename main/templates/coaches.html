@@ -13,7 +13,7 @@
                     {% if coach.user.profile.image %}
                     <img class="mr-3" src="{{ coach.user.profile.image.url }}" width="120" height="120">
                      {% else %}
-                    <img class="mr-3" src="{{ media }}profile_image/profile-placeholder.png" width="120" height="120">
+                    <img class="mr-3" src="{{ media|placeholder_image }}" width="120" height="120">
                     {% endif %}</a>
                      <div class="media-body">
                      <a href="/user/{{ coach.user_id }}" style="color: inherit">

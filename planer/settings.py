@@ -128,6 +128,8 @@ EMAIL_USE_TLS = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
+PLACEHOLDER_IMAGE_PATH = "placeholders/profile-placeholder.png"
+
 LOGIN_REDIRECT_URL = '/profile/'
 LOGIN_URL = '/login/'
 

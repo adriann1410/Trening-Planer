@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load templatefilters %}
 
 {% block content %}
 
@@ -10,8 +11,14 @@
                     <ul class="nav justify-content-end nav-tabs">
                         {% if request.user.is_authenticated %}
                             <li class="nav-item">
-                                <a class="nav-link" href={% url 'userProfile' pk=request.user.id %}>Mój Profil</a>
+                                <a class="nav-link {% if request.user.id == coach.user_id %}active{% endif %}" href={% url 'userProfile' pk=request.user.id %}>Mój Profil</a>
                             </li>
+
+                            {% if request.user.id == coach.user_id %}
+                                <li class="nav-item">
+                                    <a class="nav-link" href={% url 'editProfile' %}>Opcje</a>
+                                </li>
+                            {% endif %}
 
                             <li class="nav-item">
                                 <a class="nav-link " href="#">Wyślij wiadomość</a>
@@ -29,7 +36,7 @@
                     {% if coach.user.profile.image %}
                     <img src="{{ coach.user.profile.image.url }}" width="120" height="120">
                      {% else %}
-                    <img src="{{ media }}profile_image/profile-placeholder.png" width="120" height="120">
+                    <img src="{{ media|placeholder_image }}" width="120" height="120">
                     {% endif %}
                      <div class="media-body ml-4">
                      <h4>{{ coach.user.first_name }} {{ coach.user.last_name }}</h4>
