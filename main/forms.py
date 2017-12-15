@@ -18,12 +18,21 @@ class UserUpdateForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ['first_name', 'last_name']
+        labels = {
+            'first_name': "Name",
+            'last_name': "Surname"
+        }
 
 
 class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ['old', 'weight', 'height']
+        labels = {
+            'old': "Age",
+            'weight': "Weight",
+            'height': "Height"
+        }
 
 
 class ProfileImageForm(forms.ModelForm):

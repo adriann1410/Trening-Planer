@@ -9,3 +9,8 @@ def get_item(dictionary, key):
 @register.filter
 def placeholder_image(value):
     return os.path.join(value, settings.PLACEHOLDER_IMAGE_PATH)
+
+@register.filter
+def form_label(value, prefix=" :"):
+    return str(value+prefix)
+

@@ -1,4 +1,7 @@
 {% extends 'base.html' %}
+{% load templatefilters %}
+{% load templatetags %}
+
 {% block content %}
 
     <div class="container">
@@ -32,62 +35,42 @@
         </div>
 
             <div class="row mt-5">
-            <div class="col-md-4-offset-2">
-                <h3>{{ user.first_name }} {{ user.last_name }}</h3>
-                {% if user.profile.image %}
-                        <img src="{{ user.profile.image.url }}" width="250" height="250">
-                         {% else %}
-                        <img src="{{ media }}profile_image/profile-placeholder.png" width="250" height="250">
-                        {% endif %}
-                        <br><br>
-                <form method="post" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    {{ image_form.image }}<br><br>
-                    <button type="submit" class="btn btn-primary">Update</button>
-                </form>
-            </div>
-            <div class="col-md-4">
-                <form method="post">
-                    {% csrf_token %}
+            <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-row">
+                <div class="col">
+
+                    <h3>{{ user.first_name }} {{ user.last_name }}</h3>
+                    {% if user.profile.image %}
+                            <img src="{{ user.profile.image.url }}" width="250" height="250">
+                             {% else %}
+                            <img src="{{ media }}profile_image/profile-placeholder.png" width="250" height="250">
+                            {% endif %}
+                            <br><br>
+
+                        {{ image_form.image }}<br><br>
+
+                </div>
+                <div class="col">
+
                     <h5>User Data</h5>
                     <hr>
-                    <div class="form-group row">
-                        <div class="col-sm-10">
-                          Name : {{ user_form.first_name }}
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-sm-10">
-                          Surname : {{ user_form.last_name }}
-                        </div>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Update</button>
-                </form>
-            </div>
+                    {% horizontal_form fields=user_form %}
 
-            <div class="col-md-4">
-                <form method="post">
-                    {% csrf_token %}
+                </div>
+                <div class="col">
+
                     <h5>Factors</h5>
                     <hr>
+                    {% horizontal_form fields=profile_form %}
+
                     <div class="form-group row">
-                        <div class="col-sm-10">
-                          Age : {{ profile_form.old }}
-                        </div>
+                        <button type="submit" class="btn btn-primary">Update</button>
                     </div>
-                    <div class="form-group row">
-                        <div class="col-sm-10">
-                          Weight(kg) : {{ profile_form.weight }}
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-sm-10">
-                         Height(cm) :  {{ profile_form.height }}
-                        </div>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Update</button>
-                </form>
+
+                </div>
             </div>
+            </form>
         </div>
     </div>
 
