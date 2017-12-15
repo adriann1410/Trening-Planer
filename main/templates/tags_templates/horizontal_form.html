@@ -1,0 +1,12 @@
+{% load templatefilters %}
+
+{% for field in fields %}
+    <div class="form-group row">
+        <div class="col-sm-4 col-form-label">
+            {{ field.label|form_label }}
+        </div>
+        <div class="col-sm-8">
+            {{ field }}
+        </div>
+    </div>
+{% endfor %}

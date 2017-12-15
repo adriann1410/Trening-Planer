@@ -96,6 +96,9 @@ def userProfileEdit(request):
         profile_image_form = ProfileImageForm(data=request.POST, files=request.FILES, instance=user_profile)
         user_update = UserUpdateForm(request.POST, instance=current_user)
 
+
+        #TODO: If filed is empty - don't override the value
+
         if user_update.is_valid():
             user_update.save()
 
