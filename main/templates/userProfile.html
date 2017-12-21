@@ -1,41 +1,12 @@
 {% extends 'base.html' %}
+{% load templatefilters %}
+{% load templatetags %}
 
 {% block content %}
 
     <div class="container">
 
-        <div class="row">
-
-                <div class="col-12 ">
-
-                    <ul class="nav justify-content-end nav-tabs">
-                            <li class="nav-item">
-                                <a class="nav-link {% if request.user.id == page_user.user_id %}active{% endif %}" href={% url 'userProfile' pk=request.user.id %}>Mój Profil</a>
-                            </li>
-                        {% if request.user.id == page_user.user_id %}
-                            <li class="nav-item">
-                                <a class="nav-link" href={% url 'editProfile' %}>Opcje</a>
-                            </li>
-                        {% endif %}
-                        {% if request.user.id == page_user.user_id %}
-                            <li class="nav-item">
-                                <a class="nav-link " href="#">Wiadomości</a>
-                            </li>
-                        {% else %}
-                            <li class="nav-item">
-                                <a class="nav-link " href="#">Wyślij wiadomość</a>
-                            </li>
-                        {% endif %}
-                        {% if request.user.id == page_user.user_id %}
-                            <li class="nav-item">
-                                <a class="nav-link " href={% url 'become_coach' %}>Zostań Trenerem</a>
-                            </li>
-                        {% endif %}
-                    </ul>
-                </div>
-            <br><br>
-
-        </div>
+        {% profile_navbar current_page="userProfile" user_id=page_user.user.id %}
 
         <div class="row mt-5">
             <div class="col-md-8 col-sm-12">
@@ -43,7 +14,7 @@
                 {% if page_user.user.profile.image %}
                         <img src="{{ page_user.user.profile.image.url }}" width="250" height="250">
                          {% else %}
-                        <img src="{{ media }}profile_image/profile-placeholder.png" width="250" height="250">
+                        <img src="{{ media|placeholder_image }}" width="250" height="250">
                         {% endif %}
             </div>
             <div class="col-md-4 col-sm-12">

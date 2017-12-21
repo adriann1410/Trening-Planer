@@ -68,15 +68,15 @@ class Exercise(models.Model):
         return self.exercise_name
 
 
-class Message(models.Model):
-    author = models.ForeignKey(User, related_name='sent_messages', verbose_name=("Sender"))
-    receiver = models.ForeignKey(User, related_name='received_messages', verbose_name=("Reveiver"))
-    content = models.TextField(max_length=500)
-    read = models.BooleanField(default=False)
-    date = models.DateField()
-
-    def __str__(self):
-        return self.id
+# class Message(models.Model):
+#     author = models.ForeignKey(User, related_name='sent_messages', verbose_name=("Sender"))
+#     receiver = models.ForeignKey(User, related_name='received_messages', verbose_name=("Reveiver"))
+#     content = models.TextField(max_length=500)
+#     read = models.BooleanField(default=False)
+#     date = models.DateField()
+#
+#     def __str__(self):
+#         return self.id
 
 
 @receiver(post_save, sender=User)

@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% load templatetags %}
+{% load templatefilters %}
+
+{% block content %}
+
+    <div class="container">
+
+        {% profile_navbar current_page="friends" user_id=request.user.id %}
+
+        <div class="row">
+
+                <div class="card" style="width: 100%">
+                {% if friends %}
+
+                  <h4 class="card-header">Znajomi:</h4>
+
+                  <div class="card-body">
+                  <ul class="list-unstyled">
+                    {% for friend in friends %}
+                        <li class="media">
+                        <img class="mr-3" src="{{ media|placeholder_image }}" alt="Generic placeholder image" style="width: 64px; height: 64px;">
+                        <div class="media-body">
+                          <h5 class="mt-0 mb-1">{{ friend.email }} </h5>
+                            <a style="text-decoration:none" href={% url 'new_message' pk=friend.id %} ><i class="fa fa-envelope-o fa-2x" aria-hidden="true"></i></a><a style="padding-left: 10px" href={% url 'userProfile' pk=friend.id %}><i class="fa fa-user fa-2x" aria-hidden="true"></i></a><a style="padding-left: 10px" href="#"><i class="fa fa-ban fa-2x" aria-hidden="true"></i></a>
+                        </div>
+
+
+                        </li>
+                    {% endfor %}
+                  </ul>
+                  </div>
+
+                        {% else %}
+                    <h3>Twoja lista jest pusta</h3>
+                {% endif %}
+                </div>
+
+
+        </div>
+    <hr>
+        <div class="row">
+
+                {% if pending %}
+                    <h3>Zaproszenia do znajomych:</h3>
+                    {% for inv in pending %}
+                        <h5><a href={% url 'userProfile' pk=inv.sender.id %}>{{ inv.sender.email }}</a> <a class="btn btn-success" href={% url 'accept_invite' pk=inv.id %} >Accept</a> <a class="btn btn-danger" href={% url 'decline_invite' pk=inv.id %} >Decline</a></h5>
+                    {% endfor %}
+                {% else %}
+                    <h3>Nie masz zaproszeń</h3>
+
+                {% endif %}
+
+        </div>
+
+    </div>
+
+
+
+
+{% endblock %}

@@ -23,7 +23,7 @@
 .main/migrations/__pycache__/0002_coachprofile_img_url.cpython-36.pyc
 .main/migrations/__pycache__/0003_coachprofile_rate_counter.cpython-36.pyc
 .planer/__pycache__/
-
+.social/__pypache__/
 
 
 # Gradle:
@@ -61,6 +61,7 @@ fabric.properties
 
 .idea
 media/profile_image
+social/migrations
 db.sqlite3
 
 *.egg-info

@@ -13,6 +13,8 @@ import datetime
 from .forms import LoginForm, UserForm, UserUpdateForm, ProfileUpdateForm, CommentForm, ProfileImageForm
 from .models import CoachProfile, Profile, Comment
 
+from social.models import Friend
+
 import socket
 
 
@@ -159,6 +161,9 @@ def registerView(request):
 
             new_user = User(email=cd.get('email'), password=password, username=cd.get('email'))
             new_user.save()
+            Friend(current_user=new_user).save()
+
+
             subject = "Dziękujemy za rejestrację w Planer"
             mail_message = "Tutaj bedzie link do potwierdzenia konta"
             # socket.getaddrinfo('127.0.0.1', 8000)
@@ -180,7 +185,7 @@ def pageNotFound(request):
 
 @login_required
 def users(request):
-    all_users = User.objects.all()
+    all_users = User.objects.all().exclude(id=request.user.id)
     return render(request, "users.html", context={'title':"Users", 'users': all_users})
 
 @login_required
