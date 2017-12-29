@@ -7,20 +7,51 @@ from .forms import MessageForm
 
 @login_required
 def inbox(request):
-    conversations = Conversation.objects.filter(members=request.user)
-    messages = Message.list.for_user(request.user)
-    return render(request, 'inbox.html', {'conversations': messages})
+    conversations = Conversation.list.for_user(request.user)
+    return render(request, 'inbox.html', {'conversations': conversations})
 
 @login_required
-def new_message(request, pk):
+def conversation(request, pk):
+    _conversation = Conversation.list.for_user(request.user).get(id=pk)
+    messages = _conversation.messages.all().order_by('-send')
+
     if request.method == 'POST':
         form = MessageForm(request.POST)
-        receiver = User.objects.get(id=pk)
+        receiver = _conversation.members.all().exclude(email=request.user.email).first()
+
         if form.is_valid() and receiver:
             new_mess = form.save(commit=False)
             new_mess.author = request.user
             new_mess.receiver = receiver
             new_mess.save()
+
+            _conversation.messages.add(new_mess)
+            _conversation.save()
+
+    form = MessageForm()
+    return render(request, 'conversation.html', {'form': form, 'conversation': _conversation, 'messages': messages})
+
+@login_required
+def new_message(request, pk):
+    receiver = User.objects.get(id=pk)
+    _conversation = Conversation.list.between(request.user, receiver)
+
+    if _conversation:
+        return redirect(to=conversation, pk=_conversation.id)
+
+    if request.method == 'POST':
+        form = MessageForm(request.POST)
+
+        if form.is_valid() and receiver:
+            _conversation = Conversation.create_conversation(request.user, receiver)
+
+            new_mess = form.save(commit=False)
+            new_mess.author = request.user
+            new_mess.receiver = receiver
+            new_mess.save()
+
+            _conversation.messages.add(new_mess)
+            _conversation.save()
             return redirect(to=inbox)
     else:
         form = MessageForm()

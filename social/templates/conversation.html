@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load templatetags %}
+
+{% block content %}
+
+    <div class="container">
+
+        {% profile_navbar current_page="" user_id=request.user.id %}
+
+        <div class="row">
+            <div class="col-md-6-offset-3"><br>
+                <h2>Messages with: {% conversationReceiver conversation %}</h2>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6-offset-3"><br>
+                <div class="card">
+                    <div class="card-body">
+                        <form method="post">
+                            {% csrf_token %}
+                            <div class="form-group">
+                            <label  for="content">New Message:</label>
+                            <textarea id="content" class="form-control" name="content" rows="5" cols="100" ></textarea>
+                             </div>
+                            <button type="submit" class="btn btn-primary" >Wyślij</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row">
+        <div class="col-md-6-offset-3"><br>
+            {% if messages %}
+                    {% for message in messages %}
+                        <div class="card">
+                            <div class="card-body">
+                            <h5 class="card-title">
+                                {{ message.content }}</h5>
+                                <div class="card-text"><small>{{ message.send }}</small></div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <h3>Brak wiadomości</h3>
+                {% endif %}
+        </div>
+        </div>
+    </div>
+
+{% endblock %}

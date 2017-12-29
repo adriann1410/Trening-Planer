@@ -9,6 +9,14 @@ CHOICES = (
         ('r', "Rejected")
     )
 
+class ConversationListManager(models.Manager):
+    def for_user(self, user):
+        return super().get_queryset().filter(models.Q(members__email__icontains=user.email)).all()
+
+    def between(self, user, receiver):
+        return super().get_queryset().filter(models.Q(members__email__icontains=user.email)).filter(
+                                             models.Q(members__email__icontains=receiver.email)).first()
+
 class MessagesListManager(models.Manager):
     def for_user(self, user):
         return super().get_queryset().filter(models.Q(author=user) | models.Q(receiver=user)).all()
@@ -69,21 +77,31 @@ class Message(models.Model):
     receiver = models.ForeignKey(User, related_name='received_messages', verbose_name=("Reveiver"))
     content = models.TextField(max_length=500)
     read = models.BooleanField(default=False)
-    send = models.DateField(auto_now_add=True)
+    send = models.DateTimeField(auto_now_add=True)
 
     list = MessagesListManager()
 
+
     def __str__(self):
-        return self.id
+        return str(self.id)
 
 
 class Conversation(models.Model):
     members = models.ManyToManyField(User, related_name='conversations')
     messages = models.ManyToManyField(Message, related_name='messages')
 
+    list = ConversationListManager()
+
+    @classmethod
+    def create_conversation(cls, current_user, new_receiver):
+        new_conv = Conversation()
+        new_conv.save()
+        new_conv.members.add(current_user, new_receiver)
+        new_conv.save()
+        return new_conv
 
     def __str__(self):
-        return self.id
+        return str(self.id)
 
 
 @receiver(post_save, sender=Invite)

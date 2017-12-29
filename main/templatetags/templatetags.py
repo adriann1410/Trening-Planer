@@ -18,3 +18,8 @@ def isFriend(context, user_id):
     user = User.objects.get(id=user_id)
     return user in Friend.list.for_user(context['request'].user)
 
+@register.assignment_tag(takes_context=True)
+def conversationReceiver(context, conversation):
+    receiver = conversation.members.all().exclude(email=context['request'].user.email).first()
+    return  receiver
+

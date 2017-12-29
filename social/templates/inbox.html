@@ -5,21 +5,23 @@
 
     <div class="container">
 
-        {% profile_navbar current_page="friends" user_id=request.user.id %}
+        {% profile_navbar current_page="inbox" user_id=request.user.id %}
+
 
         <div class="row">
-        <div class="col-md-6-offset-3"><br>
-            {% if conversations %}
+            <div class="col-md-6-offset-3"><br>
+                {% if conversations %}
                     {% for conv in conversations %}
                         <div class="card">
                             <div class="card-body">
-                            <h4 class="card-title">
-                                {% if conv.receiver == request.user %}
-                                    Od: {{ conv.author }}
-                            {% else %}
-                                Do: {{ conv.receiver }}
-                            {% endif %}</h4>
-                                <div class="card-text">{{ conv.content }}</div>
+                               <a href={% url 'conversation' pk=conv.id %}>
+                                <h4 class="card-title">
+                                    {% conversationReceiver conv %}
+                                </h4>
+                               </a>
+                                <div class="card-text">
+                                    Najnowsza wiadomość
+                                </div>
                             </div>
                         </div>
                     {% endfor %}
@@ -27,8 +29,9 @@
                     <h3>Skrzynka pusta</h3>
                     <a href={% url 'friends_list' %}>Wyślij wiadomość do swoich znajomych</a>
                 {% endif %}
+            </div>
         </div>
-        </div>
+
     </div>
 
 {% endblock %}
