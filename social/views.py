@@ -14,6 +14,7 @@ def inbox(request):
 def conversation(request, pk):
     _conversation = Conversation.list.for_user(request.user).get(id=pk)
     messages = _conversation.messages.all().order_by('-send')
+    messages.update(read=True)
 
     if request.method == 'POST':
         form = MessageForm(request.POST)

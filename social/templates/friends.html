@@ -27,6 +27,7 @@
 
 
                         </li>
+                        {% if not forloop.last %}<hr>{% endif %}
                     {% endfor %}
                   </ul>
                   </div>
@@ -40,17 +41,25 @@
         </div>
     <hr>
         <div class="row">
-
+            <div class="card" style="width: 100%">
                 {% if pending %}
-                    <h3>Zaproszenia do znajomych:</h3>
-                    {% for inv in pending %}
-                        <h5><a href={% url 'userProfile' pk=inv.sender.id %}>{{ inv.sender.email }}</a> <a class="btn btn-success" href={% url 'accept_invite' pk=inv.id %} >Accept</a> <a class="btn btn-danger" href={% url 'decline_invite' pk=inv.id %} >Decline</a></h5>
-                    {% endfor %}
+                    <h4 class="card-header">Zaproszenia do znajomych:</h4>
+                    <div class="card-body">
+                        <ul class="list-unstyled">
+                        {% for inv in pending %}
+                            <li class="media">
+                                <div class="media-body">
+                                    <h5><a href={% url 'userProfile' pk=inv.sender.id %}>{{ inv.sender.email }}</a> <a class="btn btn-success" href={% url 'accept_invite' pk=inv.id %} >Accept</a> <a class="btn btn-danger" href={% url 'decline_invite' pk=inv.id %} >Decline</a></h5>
+                                </div>
+                            </li>
+                            {% if not forloop.last %}<hr>{% endif %}
+                        {% endfor %}
+                        </ul>
+                    </div>
                 {% else %}
                     <h3>Nie masz zaproszeń</h3>
-
                 {% endif %}
-
+            </div>
         </div>
 
     </div>

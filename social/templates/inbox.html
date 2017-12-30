@@ -10,6 +10,8 @@
 
         <div class="row">
             <div class="col-md-6-offset-3"><br>
+            <h3>Skrzynka pocztowa:</h3>
+            <hr>
                 {% if conversations %}
                     {% for conv in conversations %}
                         <div class="card">
@@ -26,7 +28,7 @@
                         </div>
                     {% endfor %}
                 {% else %}
-                    <h3>Skrzynka pusta</h3>
+                    <h5>Brak wiadomości</h5>
                     <a href={% url 'friends_list' %}>Wyślij wiadomość do swoich znajomych</a>
                 {% endif %}
             </div>

@@ -1,5 +1,7 @@
 {% load templatetags %}
 {% isFriend user_id as isUserMyFriend %}
+{% unreadMessages as newMessages %}
+{% getNewInvites as newInvites %}
 
 <div class="row">
 
@@ -20,7 +22,7 @@
 
                         {% if request.user.id == user_id %}
                             <li class="nav-item">
-                                <a class="nav-link {% if current == 'friends' %}active{% endif %}" href={% url 'friends_list' %}>Znajomi</a>
+                                <a class="nav-link {% if current == 'friends' %}active{% endif %}" href={% url 'friends_list' %}>Znajomi {% if newInvites %}<span class="badge badge-light">{{ newInvites }}</span>{% endif %}</a>
                             </li>
                         {% else %}
                             {% if not isUserMyFriend %}
@@ -33,11 +35,11 @@
 
                         {% if request.user.id == user_id %}
                             <li class="nav-item">
-                                <a class="nav-link {% if current == 'inbox' %}active{% endif %}" href={% url 'inbox' %}>Wiadomości</a>
+                                <a class="nav-link {% if current == 'inbox' %}active{% endif %}" href={% url 'inbox' %}>Wiadomości {% if newMessages %}<span class="badge badge-light">{{ newMessages }}</span>{% endif %}</a>
                             </li>
                         {% else %}
                             <li class="nav-item">
-                                <a class="nav-link " href="#">Wyślij wiadomość</a>
+                                <a class="nav-link " href={% url 'new_message' pk=user_id %}>Wyślij wiadomość</a>
                             </li>
                         {% endif %}
 
