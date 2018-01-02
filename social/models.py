@@ -9,6 +9,15 @@ CHOICES = (
         ('r', "Rejected")
     )
 
+
+'''
+    MANAGER'Y
+    Podpiete pod modele, dla łatwiejszego dostępnu
+    np: Invite.pending.for_user(request.user) - zwróci wszystkie oczekujące zaproszenia
+                                                dla obecnego użytkownika
+    Conversation.list.between(user_1, user_2) - zwróci konversacje pomiędzy userami lub None
+'''
+
 class ConversationListManager(models.Manager):
     def for_user(self, user):
         return super().get_queryset().filter(models.Q(members__email__icontains=user.email)).all()
@@ -35,6 +44,9 @@ class FriendManager(models.Manager):
     def get_queryset(self):
         return super().get_queryset()
 
+'''
+    MODELE:
+'''
 
 class Invite(models.Model):
     sender = models.ForeignKey(User, related_name='invites_send')
@@ -73,14 +85,13 @@ class Friend(models.Model):
 
 
 class Message(models.Model):
-    author = models.ForeignKey(User, related_name='sent_messages', verbose_name=("Sender"))
-    receiver = models.ForeignKey(User, related_name='received_messages', verbose_name=("Reveiver"))
+    author = models.ForeignKey(User, related_name='sent_messages', verbose_name="Sender")
+    receiver = models.ForeignKey(User, related_name='received_messages', verbose_name="Reveiver")
     content = models.TextField(max_length=500)
     read = models.BooleanField(default=False)
     send = models.DateTimeField(auto_now_add=True)
 
     list = MessagesListManager()
-
 
     def __str__(self):
         return str(self.id)
@@ -104,8 +115,15 @@ class Conversation(models.Model):
         return str(self.id)
 
 
+'''
+    SYGNALY
+'''
+
 @receiver(post_save, sender=Invite)
 def create_friend_from_invite(sender, instance, **kwargs):
+    '''
+        Tworzy połączenie 'Friend' pomiędzy userami jeśli zaproszenie zostało akceptowane
+    '''
     if instance.accepted == 'a':
         Friend.create_friend(current_user=instance.receiver, new_friend=instance.sender)
         Friend.create_friend(current_user=instance.sender, new_friend=instance.receiver)
