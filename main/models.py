@@ -47,38 +47,6 @@ class Pupil(models.Model):
         return self.id
 
 
-class Training(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    date = models.DateField()
-    exercises_num = models.IntegerField(default=0)
-    b_weight = models.IntegerField(default=0)
-
-    def __str__(self):
-        return self.id
-
-
-class Exercise(models.Model):
-    training = models.ForeignKey(Training, on_delete=models.CASCADE)
-    exercise_name = models.CharField(max_length=100)
-    series = models.IntegerField(default=0)
-    reps = models.IntegerField(default=0)
-    weight = models.IntegerField(default=0)
-
-    def __str__(self):
-        return self.exercise_name
-
-
-# class Message(models.Model):
-#     author = models.ForeignKey(User, related_name='sent_messages', verbose_name=("Sender"))
-#     receiver = models.ForeignKey(User, related_name='received_messages', verbose_name=("Reveiver"))
-#     content = models.TextField(max_length=500)
-#     read = models.BooleanField(default=False)
-#     date = models.DateField()
-#
-#     def __str__(self):
-#         return self.id
-
-
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
