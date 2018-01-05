@@ -61,7 +61,9 @@ fabric.properties
 
 .idea
 media/profile_image
+main/migrations
 social/migrations
+workout/migrations
 db.sqlite3
 
 *.egg-info

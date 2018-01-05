@@ -181,7 +181,7 @@ def registerView(request):
 
 
 def pageNotFound(request):
-    return render(request, '404page.html')
+    return render(request, '404.html')
 
 @login_required
 def users(request):

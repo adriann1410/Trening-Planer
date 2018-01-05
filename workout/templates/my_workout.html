@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load templatetags %}
+
+{% block content %}
+
+    <div class="container">
+        {% workout_navbar %}
+
+        <div class="row">
+            <div class="col-md-6-offset-3"><br>
+            <h3>My workouts:</h3>
+            <hr>
+                {% if workouts %}
+                    {% for workout in workouts %}
+                        <div class="card">
+                            <div class="card-body">
+                               <a href={% url 'workout_detail' pk=workout.id %}>
+                                <h4 class="card-title">
+                                    {{ workout.name }}
+                                </h4>
+                               </a>
+                                <div class="card-text">
+                                    {{ workout.created }}
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <h5>You have no workouts</h5>
+                    <a href={% url 'add_workout' %}>Create workout</a>
+                {% endif %}
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}

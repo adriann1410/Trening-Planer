@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'workout',
     'social',
     'main.apps.MainConfig',
     'django.contrib.admin',

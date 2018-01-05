@@ -5,6 +5,12 @@ from django.contrib.auth.models import User
 
 register = template.Library()
 
+
+"""
+    Main
+"""
+
+
 @register.inclusion_tag("tags_templates/horizontal_form.html")
 def horizontal_form(fields):
     return {'fields': fields}
@@ -12,6 +18,10 @@ def horizontal_form(fields):
 @register.inclusion_tag("tags_templates/profile_navbar.html", takes_context=True)
 def profile_navbar(context, current_page, user_id):
     return {'request': context['request'], 'current': current_page, 'user_id': user_id}
+
+"""
+    Social
+"""
 
 @register.assignment_tag(takes_context=True)
 def isFriend(context, user_id):
@@ -33,3 +43,12 @@ def unreadMessages(context):
 def getNewInvites(context):
     new_invites = Invite.pending.for_user(context['request'].user).count()
     return new_invites
+
+"""
+    Workout
+"""
+
+@register.inclusion_tag("tags_templates/workout_navbar.html", takes_context=True)
+def workout_navbar(context):
+    return {'request':context['request']}
+

@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load templatetags %}
+{% load static %}
+
+{% block content %}
+
+    <div class="container">
+        {% workout_navbar %}
+        <div class="row">
+            <div class="col-lg-offset-2">
+                <h3>New Workout: <small>Choose exercise</small> </h3>
+                <hr>
+                <script src="{% static "js/duplicateInput.js" %}" language="Javascript" type="text/javascript"></script>
+                <form method="POST">
+                    {% csrf_token %}
+                <label for="workoutName">Name:</label>
+                <input type="text" class="form-control" id="workoutName" placeholder="np. Wtorkowy trening" name="workoutName" required>
+                <br>
+                <div class="col-lg-offset-2">
+                    <div class="row" id="exerciseSelectDiv">
+                            <div class="form-row">
+                                <div class="col">
+                                    <label for="exerciseSelect">Exercise name</label>
+                                    <select class="form-control" id="exerciseSelect" name="exerciseInputs[]">
+                                        {% for exercise in exercises %}
+                                            <option>{{ exercise.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col">
+                                    <label for="seriesSelect">Series</label>
+                                    <input type="number" min="0" class="form-control" id="seriesSelect" placeholder="0" name="seriesInputs[]">
+                                </div>
+                                <div class="col">
+                                    <label for="repsSelect">Reps</label>
+                                    <input type="number" min="0" class="form-control" id="repsSelect" placeholder="0" name="repsInputs[]">
+                                </div>
+                                <div class="col">
+                                    <label for="weightSelect">Weight [kg]</label>
+                                    <input type="number" min="0" class="form-control" id="weightSelect" placeholder="0" name="weightInputs[]">
+                                </div>
+                        </div>
+                        <br>
+                    </div>
+                </div>
+                <br>
+                     <input type="button" class="btn btn-success mb-2" value="Add exercise" onClick="duplicate('exerciseSelectDiv');">
+                <br>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+
+        </div>
+
+    </div>
+
+{% endblock %}
+
