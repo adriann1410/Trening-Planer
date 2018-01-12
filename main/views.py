@@ -15,7 +15,6 @@ from .models import CoachProfile, Profile, Comment
 
 from social.models import Friend
 
-import socket
 
 
 # Create your views here.

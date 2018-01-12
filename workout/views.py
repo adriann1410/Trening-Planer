@@ -55,7 +55,7 @@ def add_workout(request):
 def edit_workout(request, pk):
     workout = get_object_or_404(Workout, id=pk)
     schedules = Workout.schedules.get_all_for(id=pk)
-    if workout.author.id is not request.user.id:
+    if workout.author.id not in [request.user.id]:
         message = "You have no permissions to edit this workout"
         return render(request, 'workout_error.html', {'message': message})
 
