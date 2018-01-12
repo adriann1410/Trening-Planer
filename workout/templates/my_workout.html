@@ -1,37 +1,51 @@
 {% extends 'base.html' %}
 {% load templatetags %}
+{% load static %}
 
 {% block content %}
 
+    <script src="{% static "js/deleteWorkout.js" %}" language="Javascript" type="text/javascript"></script>
+
     <div class="container">
         {% workout_navbar %}
-
+        <script href=""></script>
         <div class="row">
-            <div class="col-md-6-offset-3"><br>
-            <h3>My workouts:</h3>
-            <hr>
+
+                <div class="card" style="width: 100%">
                 {% if workouts %}
+                  <h4 class="card-header">My workouts:</h4>
+
+                  <div class="card-body">
+                  <ul class="list-unstyled">
                     {% for workout in workouts %}
-                        <div class="card">
-                            <div class="card-body">
-                               <a href={% url 'workout_detail' pk=workout.id %}>
-                                <h4 class="card-title">
-                                    {{ workout.name }}
-                                </h4>
-                               </a>
-                                <div class="card-text">
-                                    {{ workout.created }}
-                                </div>
-                            </div>
+                        <li class="media">
+                        <div class="media-body">
+                            <a href={% url 'workout_detail' pk=workout.id %}> <h5 class="mt-0 mb-1">{{ workout.name }}</h5></a>
+                            <small>Created: {{ workout.created }}</small>
+                            <a href={% url 'edit_workout' pk=workout.id %}><button type="button" class="btn btn-primary" >
+                              Edit
+                            </button></a>
+                            <a href={% url 'delete_workout' pk=workout.id %}><button type="button" class="btn btn-danger" >
+                              Delete
+                            </button></a>
                         </div>
+
+
+                        </li>
+                        {% if not forloop.last %}<hr>{% endif %}
                     {% endfor %}
-                {% else %}
+                  </ul>
+                  </div>
+
+                        {% else %}
                     <h5>You have no workouts</h5>
                     <a href={% url 'add_workout' %}>Create workout</a>
                 {% endif %}
-            </div>
+                </div>
+
+
         </div>
 
-    </div>
 
 {% endblock %}
+

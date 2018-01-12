@@ -1,5 +1,5 @@
 from django.db.models import Avg
-from django.shortcuts import render, redirect, reverse
+from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
@@ -99,20 +99,16 @@ def userProfileEdit(request):
         user_update = UserUpdateForm(request.POST, instance=current_user)
 
 
-        #TODO: If filed is empty - don't override the value
-
         if user_update.is_valid():
-            user_update.save()
+            user_update.save(user_id=request.user.id)
 
         if profile_image_form.is_valid():
-            profile_image_form.save()
-        else:
-            print("False")
-
+            profile_image_form.save(user_id=request.user.id)
 
         if profile_update.is_valid():
-            profile_update.save()
+            profile_update.save(user_id=request.user.id)
 
+        return redirect(to=userProfileEdit)
 
     update_profile_form = ProfileUpdateForm()
     update_user_form = UserUpdateForm()

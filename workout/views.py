@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 
 from .forms import ScheduleForm
-from .models import Schedule, Workout, Exercise
+from .models import Schedule, Workout, Exercise, Plan, Calendar
 
 @login_required
 def my_workout(request):
@@ -14,12 +14,13 @@ def workout_detail(request, pk):
     """
         pk - workout.id
     """
-    workout_plan = get_object_or_404(Workout, id=pk).plan.all()
+    workout_plan = get_object_or_404(Workout, id=pk).schedules.all()
     return render(request, 'workout_detail.html', {"workout": workout_plan})
 
 @login_required
 def calendar(request):
-    return render(request, 'my_workout.html')
+    _calendar = Calendar.get_calendar(request.user)
+    return render(request, 'calendar.html', {'calendar' : _calendar})
 
 @login_required
 def add_workout(request):
@@ -49,3 +50,20 @@ def add_workout(request):
     exercises = Exercise.objects.all()
     form = ScheduleForm()
     return render(request, 'add_workout.html', {'form':form, 'exercises': exercises})
+
+@login_required
+def edit_workout(request, pk):
+    workout = get_object_or_404(Workout, id=pk)
+
+    if workout.author.id is not request.user.id:
+        message = "You have no permissions to edit this workout"
+        return render(request, 'workout_error.html', {'message': message})
+
+    return render(request, 'edit_workout.html', {'workout': workout})
+
+
+@login_required
+def delete_workout(request, pk):
+    Workout.remove_workout(request.user, pk)
+    return redirect(to=my_workout)
+

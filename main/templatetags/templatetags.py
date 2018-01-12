@@ -26,6 +26,8 @@ def profile_navbar(context, current_page, user_id):
 @register.assignment_tag(takes_context=True)
 def isFriend(context, user_id):
     user = User.objects.get(id=user_id)
+    if user == context['request'].user:
+        return False
     return user in Friend.list.for_user(context['request'].user)
 
 @register.simple_tag(takes_context=True)
@@ -51,4 +53,8 @@ def getNewInvites(context):
 @register.inclusion_tag("tags_templates/workout_navbar.html", takes_context=True)
 def workout_navbar(context):
     return {'request':context['request']}
+
+@register.assignment_tag()
+def mark2delete(workout_id):
+    return workout_id
 
