@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load templatetags %}
+{% load static %}
+
+{% block content %}
+
+    <div class="container">
+        {% workout_navbar %}
+
+        <div class="row">
+            <div class="col-lg-offset-2">
+                <h3>Edit workout:</h3>
+                <table class="table">
+                  <thead class="thead-inverse">
+                    <tr>
+                      <th>#</th>
+                      <th>Exercise</th>
+                      <th>Series</th>
+                      <th>Reps</th>
+                      <th>Weight</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  {% for schedule in workout.plan.all %}
+                    <tr>
+                      <th scope="row">{{ schedule.id }}</th>
+                      <td>{{ schedule.exercise.name }}</td>
+                      <td>{{ schedule.series }}</td>
+                      <td>{{ schedule.reps }}</td>
+                      <td>{{ schedule.weight }}</td>
+                    </tr>
+                  {% endfor %}
+
+                  </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}
