@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 
-from .forms import ScheduleForm
+from .forms import ScheduleForm, ScheduleEditForm
 from .models import Schedule, Workout, Exercise, Plan, Calendar
 
 @login_required
@@ -14,8 +14,8 @@ def workout_detail(request, pk):
     """
         pk - workout.id
     """
-    workout_plan = get_object_or_404(Workout, id=pk).schedules.all()
-    return render(request, 'workout_detail.html', {"workout": workout_plan})
+    schedules = Workout.schedules.get_all_for(id=pk)
+    return render(request, 'workout_detail.html', {"schedules": schedules, 'workout_pk': pk})
 
 @login_required
 def calendar(request):
@@ -54,12 +54,30 @@ def add_workout(request):
 @login_required
 def edit_workout(request, pk):
     workout = get_object_or_404(Workout, id=pk)
-
+    schedules = Workout.schedules.get_all_for(id=pk)
     if workout.author.id is not request.user.id:
         message = "You have no permissions to edit this workout"
         return render(request, 'workout_error.html', {'message': message})
 
-    return render(request, 'edit_workout.html', {'workout': workout})
+    if request.method == 'POST':
+        seriesInput = request.POST.getlist('seriesInputs[]')
+        repsInput = request.POST.getlist('repsInputs[]')
+        weightInput = request.POST.getlist('weightInputs[]')
+
+
+        for i in range(len(schedules)):
+            if seriesInput[i] is not '':
+                schedules[i].series = seriesInput[i]
+            if repsInput[i] is not '':
+                schedules[i].reps = repsInput[i]
+            if weightInput[i] is not '':
+                schedules[i].weight = weightInput[i]
+            schedules[i].save()
+
+
+        return redirect(to=workout_detail, pk=pk)
+
+    return render(request, 'edit_workout.html', {'schedules': schedules, 'workout_pk': pk})
 
 
 @login_required

@@ -20,9 +20,9 @@
                     </tr>
                   </thead>
                   <tbody>
-                  {% for schedule in workout %}
+                  {% for schedule in schedules %}
                     <tr>
-                      <th scope="row">{{ schedule.id }}</th>
+                      <th scope="row">{{ forloop.counter }}</th>
                       <td>{{ schedule.exercise.name }}</td>
                       <td>{{ schedule.series }}</td>
                       <td>{{ schedule.reps }}</td>
@@ -33,6 +33,11 @@
                   </tbody>
                 </table>
             </div>
+        </div>
+        <div class="row">
+             <div class="col-lg-offset-2">
+                 <a href={% url 'edit_workout' pk=workout_pk %}><button class="btn btn-success">Edit</button> </a>
+             </div>
         </div>
 
     </div>

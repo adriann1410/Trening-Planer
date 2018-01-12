@@ -20,6 +20,18 @@ PLAN_REPEATS = (
     ('m', 'Monthly')
 )
 
+class WorkoutScheduleManager(models.Manager):
+    def get_all_for(self, id=None):
+        if not id:
+            id = self.model.pk
+        return Schedule.objects.filter(workout_id=id).all()
+
+
+class WorkoutManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset()
+
+
 class Exercise(models.Model):
     '''
         Pojedyńcze ćwiczenie
@@ -29,7 +41,7 @@ class Exercise(models.Model):
     description = models.CharField(max_length=250)
 
     def __str__(self):
-        return str(self.id)
+        return str(self.name)
 
 
 class Workout(models.Model):
@@ -40,6 +52,9 @@ class Workout(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     coach = models.ForeignKey(CoachProfile, null=True)
     created = models.DateTimeField(auto_now_add=True)
+
+    objects = WorkoutManager()
+    schedules = WorkoutScheduleManager()
 
     @classmethod
     def remove_workout(cls, author, pk):
@@ -57,7 +72,7 @@ class Schedule(models.Model):
     '''
         Tzw. Rozkład tj. ćwiczenie; ilość powtórzeń; obciążenie
     '''
-    workout = models.ForeignKey(Workout, on_delete=models.CASCADE, related_name='schedules')
+    workout = models.ForeignKey(Workout, on_delete=models.CASCADE)
     exercise = models.ForeignKey(Exercise, on_delete=models.CASCADE)
     series = models.IntegerField(default=0)
     reps = models.IntegerField(default=0)

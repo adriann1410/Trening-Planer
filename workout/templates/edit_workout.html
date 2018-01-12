@@ -10,29 +10,44 @@
         <div class="row">
             <div class="col-lg-offset-2">
                 <h3>Edit workout:</h3>
-                <table class="table">
-                  <thead class="thead-inverse">
-                    <tr>
-                      <th>#</th>
-                      <th>Exercise</th>
-                      <th>Series</th>
-                      <th>Reps</th>
-                      <th>Weight</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                  {% for schedule in workout.plan.all %}
-                    <tr>
-                      <th scope="row">{{ schedule.id }}</th>
-                      <td>{{ schedule.exercise.name }}</td>
-                      <td>{{ schedule.series }}</td>
-                      <td>{{ schedule.reps }}</td>
-                      <td>{{ schedule.weight }}</td>
-                    </tr>
+            <form method="post">
+            {% csrf_token %}
+                  {% for schedule in schedules %}
+                      <div class="col-lg-offset-2">
+                        <div class="row" id="exerciseSelectDiv">
+                                <div class="form-row">
+                                    <div class="col">
+                                        <label>{{ forloop.counter }}</label>
+                                    </div>
+                                    <div class="col">
+                                        <label>{{ schedule.exercise.name }}</label>
+                                    </div>
+                                    <div class="col">
+                                        <label for="seriesSelect">Series</label>
+                                        {{ schedule.series }}
+                                        <input type="number" min="0" class="form-control" id="seriesSelect" placeholder="0" name="seriesInputs[]">
+                                    </div>
+                                    <div class="col">
+                                        <label for="repsSelect">Reps</label>
+                                        {{ schedule.reps }}
+                                        <input type="number" min="0" class="form-control" id="repsSelect" placeholder="0" name="repsInputs[]">
+                                    </div>
+                                    <div class="col">
+                                        <label for="weightSelect">Weight [kg]</label>
+                                        {{ schedule.weight }}
+                                        <input type="number" min="0" class="form-control" id="weightSelect" placeholder="0" name="weightInputs[]">
+                                    </div>
+                            </div>
+                            <br>
+                        </div>
+                    </div>
+                      <br>
                   {% endfor %}
+            <br>
+                    <a href={% url 'workout_detail' pk=workout_pk %}><button class="btn btn-warning">Back</button> </a>
+                    <button type="submit" class="btn btn-primary">Update</button>
+            </form>
 
-                  </tbody>
-                </table>
             </div>
         </div>
 

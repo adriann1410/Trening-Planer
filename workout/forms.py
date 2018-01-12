@@ -7,3 +7,9 @@ class ScheduleForm(forms.ModelForm):
         model = Schedule
         fields = ['exercise', 'series', 'reps', 'weight']
 
+
+class ScheduleEditForm(forms.ModelForm):
+    class Meta:
+        model = Schedule
+        fields = ['series', 'reps', 'weight']
+
