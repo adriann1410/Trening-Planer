@@ -1,17 +1,13 @@
-from django.db.models import Avg
 from django.shortcuts import render, redirect, reverse, get_object_or_404
-from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, logout, authenticate, get_user_model
 from django.contrib.auth.hashers import make_password
 from django.core.mail import send_mail
 from django.conf import  settings
-from django.core.exceptions import ObjectDoesNotExist
-import datetime
 
 from .forms import LoginForm, UserForm, UserUpdateForm, ProfileUpdateForm, CommentForm, ProfileImageForm
-from .models import CoachProfile, Profile, Comment
+from coach.models import Comment
 
 from social.models import Friend
 
@@ -22,38 +18,6 @@ def index(request):
     if request.user.is_authenticated:
         return redirect(to=userProfile, pk=request.user.id) # reverse
     return render(request, "index.html", context={'title':"Index"})
-
-
-def coachesList(request):
-    avg_rates = {}
-    coaches = CoachProfile.objects.all()
-    for coachh in coaches:
-        average_rate = Comment.objects.filter(coach_id=coachh.id).aggregate(Avg('commentRate'))
-        avg_rates[coachh.user.id] = average_rate['commentRate__avg']
-
-
-    return render(request, "coaches.html", {'coaches': coaches, 'avg_rates': avg_rates})
-
-
-def rate_coach(request):    # Potrzebne to jeszcze ?
-    coach_id = request.POST.get('coach_id', None)
-    rate = request.POST.get('rate', None)
-
-    currentrate = 0
-    if coach_id:
-        coach = CoachProfile.objects.get(user_id=int(coach_id))
-        if coach is not None:
-            coachrates = coach.rate_counter + 1
-            currentrate = round((coach.rate_sum + float(rate)) / float(coachrates),1)
-            coach.rate = currentrate
-            coach.rate_sum = coach.rate_sum + float(rate)
-            coach.rate_counter = coachrates
-            coach.save()
-    return HttpResponse(currentrate)
-
-@login_required
-def createCoachProfile(request):
-    return render(request, 'become_coach.html')
 
 
 def userProfile(request, pk):

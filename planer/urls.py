@@ -23,5 +23,6 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^', include('main.urls')),
     url(r'^social/', include('social.urls')),
-    url(r'^workout/', include('workout.urls'))
+    url(r'^workout/', include('workout.urls')),
+    url(r'^coach/', include('coach.urls'))
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -19,34 +19,6 @@ class Profile(models.Model):
         return self.user.username
 
 
-class CoachProfile(models.Model):
-    # pupils = models.OneToManyField(User)
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    description = models.TextField(max_length=500)
-
-    def __str__(self):
-        return self.user.username
-
-
-class Comment(models.Model):
-    coach = models.ForeignKey(CoachProfile, related_name='comments', verbose_name=("Coach"), default=None)
-    author = models.ForeignKey(User, related_name='sent_comment', verbose_name=("author"))
-    date = models.DateField(default=datetime.date.today)
-    content = models.TextField(max_length=500)
-    commentRate = models.DecimalField(max_digits=2, decimal_places=1, validators=[MinValueValidator(0), MaxValueValidator(5)])
-
-    def __str__(self):
-        return str(self.id)
-
-
-class Pupil(models.Model):
-    coach_id = models.ForeignKey(CoachProfile)
-    pupil_id = models.OneToOneField(Profile)
-
-    def __str__(self):
-        return self.id
-
-
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:

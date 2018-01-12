@@ -35,6 +35,11 @@
         <li class="nav-item">
         <a class="nav-link" href={% url 'my_workout' %}>Workout</a>
       </li>
+        {% if user.is_coach %}
+            <li class="nav-item">
+            <a class="nav-link" href={% url 'coach_panel' %}>Workout</a>
+          </li>
+        {% endif %}
     </ul>
 
       <span class="nav-item active">
