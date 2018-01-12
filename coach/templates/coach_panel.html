@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    <ul>
+    {% for pupil in pupils %}
+        <li>
+            {{ pupil }}
+        </li>
+    {% endfor %}
+    </ul>
+
+
+{% endblock %}
