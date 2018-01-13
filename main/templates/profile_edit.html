@@ -11,7 +11,7 @@
             <div class="row mt-5">
             <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
-            <div class="form-row">
+            <div class="row">
                 <div class="col-md-3 col-sm-8">
 
                     <h3>{{ user.first_name }} {{ user.last_name }}</h3>
@@ -38,10 +38,11 @@
                     <hr>
                     {% horizontal_form fields=profile_form %}
 
-                    <div class="form-group row">
-                        <button type="submit" class="btn btn-primary">Update</button>
-                    </div>
-
+                </div>
+            </div>
+            <div class="row justify-content-end">
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-primary">Update</button>
                 </div>
             </div>
             </form>
