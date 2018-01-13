@@ -11,12 +11,12 @@
             <div class="row mt-5">
             <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
-            <div class="form-row">
-                <div class="col">
+            <div class="row">
+                <div class="col-md-3 col-sm-8">
 
                     <h3>{{ user.first_name }} {{ user.last_name }}</h3>
                     {% if user.profile.image %}
-                            <img src="{{ user.profile.image.url }}" width="250" height="250">
+                            <img src="{{ user.profile.image.url }}" width="200" height="200">
                              {% else %}
                             <img src="{{ media }}profile_image/profile-placeholder.png" width="250" height="250">
                             {% endif %}
@@ -25,23 +25,24 @@
                         {{ image_form.image }}<br><br>
 
                 </div>
-                <div class="col">
+                <div class="col-md-4 col-sm-8 mr-5">
 
                     <h5>User Data</h5>
                     <hr>
                     {% horizontal_form fields=user_form %}
 
                 </div>
-                <div class="col">
+                <div class="col-md-4 col-sm-8">
 
                     <h5>Factors</h5>
                     <hr>
                     {% horizontal_form fields=profile_form %}
 
-                    <div class="form-group row">
-                        <button type="submit" class="btn btn-primary">Update</button>
-                    </div>
-
+                </div>
+            </div>
+            <div class="row justify-content-end">
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-primary">Update</button>
                 </div>
             </div>
             </form>
