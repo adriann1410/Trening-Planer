@@ -3,7 +3,9 @@ from django.db.models import Avg
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 
-from .models import Comment, CoachProfile
+from .models import Comment, CoachProfile, CoachApplication
+from .forms import UpgradeProfileForm
+from main.models import Profile
 
 
 @login_required
@@ -24,6 +26,26 @@ def coachesList(request):
 
 @login_required
 def createCoachProfile(request):
-    return render(request, 'become_coach.html')
+    profile = Profile.objects.filter(user=request.user).first()
+    if profile.isCoach:
+        error = "Your account is already Coach Account"
+        return render(request, 'become_coach.html', {'error': error})
+
+    user_app = CoachApplication.objects.filter(sender__id=request.user.id).first()
+    if user_app:
+        error = "You already send application"
+        return render(request, 'become_coach.html', {'error': error})
+
+    if request.method == 'POST':
+        form = UpgradeProfileForm(request.POST)
+        if form.is_valid():
+            cd = form.cleaned_data
+            new_app = CoachApplication(sender=request.user, note=cd.get('note'))
+            new_app.save()
+            message = "Application was send ! We will contact you soon"
+            return render(request, 'become_coach.html', {'message': message})
+    else:
+        form = UpgradeProfileForm()
+    return render(request, 'become_coach.html', {'form': form})
 
 

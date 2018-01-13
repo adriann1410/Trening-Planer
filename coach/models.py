@@ -23,3 +23,16 @@ class Comment(models.Model):
 
     def __str__(self):
         return str(self.id)
+
+
+class CoachApplication(models.Model):
+    sender = models.ForeignKey(User)
+    date = models.DateTimeField(auto_now_add=True)
+    note = models.TextField(max_length=500, null=True)
+    state = models.BooleanField(default=False, verbose_name="Accept")
+
+    def __str__(self):
+        return str(self.sender.email)
+
+
+
