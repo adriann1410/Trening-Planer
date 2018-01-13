@@ -8,11 +8,11 @@
 
     {% profile_navbar current_page="editProfile" user_id=user.id %}
 
-            <div class="row mt-5">
-            <form method="post" enctype="multipart/form-data">
+
+        <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
-            <div class="row">
-                <div class="col-md-3 col-sm-8">
+            <div class="row mt-5">
+                <div class="col-md-4 col-sm-8">
 
                     <h3>{{ user.first_name }} {{ user.last_name }}</h3>
                     {% if user.profile.image %}
@@ -25,7 +25,7 @@
                         {{ image_form.image }}<br><br>
 
                 </div>
-                <div class="col-md-4 col-sm-8 mr-5">
+                <div class="col-md-4 col-sm-8">
 
                     <h5>User Data</h5>
                     <hr>
@@ -45,8 +45,8 @@
                     <button type="submit" class="btn btn-primary">Update</button>
                 </div>
             </div>
-            </form>
-        </div>
+        </form>
+
     </div>
 
 {% endblock %}
