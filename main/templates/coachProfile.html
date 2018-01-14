@@ -65,7 +65,7 @@
         </div>
         <br>
         <hr>
-        {% if user.is_authenticated and request.user != coach.user.id %}
+        {% if user.is_authenticated and request.user.profile.isCoach == False %}
         <div class="row mt-4">
             <h4>Dodaj komentarz:</h4>
         </div>
