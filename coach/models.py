@@ -4,9 +4,20 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 from main.models import User
 
 
+class CoachProfileManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset()
+
+    def get_user_coaches(self, user_id):
+
+        return super().get_queryset()
+
+
 class CoachProfile(models.Model):
-    pupils = models.ManyToManyField(User, related_name='my_coach')
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    pupils = models.ManyToManyField(User, related_name='my_coaches')
+    user = models.OneToOneField(User,
+                                on_delete=models.CASCADE,
+                                related_name='coach_profile')
     description = models.TextField(max_length=500)
 
     def __str__(self):

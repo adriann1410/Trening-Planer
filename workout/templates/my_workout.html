@@ -8,7 +8,6 @@
 
     <div class="container">
         {% workout_navbar %}
-        <script href=""></script>
         <div class="row">
 
                 <div class="card" style="width: 100%">
@@ -42,10 +41,37 @@
                     <a href={% url 'add_workout' %}>Create workout</a>
                 {% endif %}
                 </div>
-
-
         </div>
+    <div class="row">
+        <div class="card" style="width: 100%">
+        {% if my_pupils %}
+        <h4 class="card-header">Shared workouts:</h4>
+          {% for pupil in my_pupils.all %}
+          <h5 class="card-header">{{ pupil.email }}</h5>
 
+          <div class="card-body">
+          <ul class="list-unstyled">
+                {% for workout in pupil.my_workouts.all %}
+                <li class="media">
+                <div class="media-body">
+                    <a href={% url 'workout_detail' pk=workout.id %}> <h5 class="mt-0 mb-1">{{ workout.name }}</h5></a>
+                    <small>Created: {{ workout.created }}</small>
+                    <a href={% url 'edit_workout' pk=workout.id %}><button type="button" class="btn btn-primary" >
+                      Edit
+                    </button></a>
+{#                    <a href={% url 'delete_workout' pk=workout.id %}><button type="button" class="btn btn-danger" >#}
+{#                      Delete#}
+{#                    </button></a>#}
+                </div>
+                </li>
+                    {% if not forloop.last %}<hr>{% endif %}
+                    {% endfor %}
+          </ul>
+          </div>
+            {% endfor %}
+        {% endif %}
+        </div>
+        </div>
 
 {% endblock %}
 

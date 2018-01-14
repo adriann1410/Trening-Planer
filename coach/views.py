@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.db.models import Avg
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
@@ -6,16 +6,28 @@ from django.contrib.auth.decorators import login_required
 from .models import Comment, CoachProfile, CoachApplication
 from .forms import UpgradeProfileForm
 from main.models import Profile
-
+from workout.views import my_workout
 
 @login_required
 def coach_panel(request):
     return render(request, 'coach_panel.html', {'pupils': None})
 
+@login_required
+def start_collaboration(request, pk):
+    # pk - coach pk
+    if request.user.id == pk:
+        return redirect(to=coachesList)
+
+    coach = CoachProfile.objects.filter(user__id=pk).first()
+    if coach:
+        coach.pupils.add(request.user)
+
+    return redirect(to=my_workout)
+
 
 def coachesList(request):
     avg_rates = {}
-    coaches = CoachProfile.objects.all()
+    coaches = CoachProfile.objects.all().exclude(user=request.user)
     for coach in coaches:
         average_rate = Comment.objects.filter(coach_id=coach.id).aggregate(Avg('commentRate'))
         avg_rates[coach.user.id] = average_rate['commentRate__avg']

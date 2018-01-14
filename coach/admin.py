@@ -12,7 +12,7 @@ class CoachApplicationAdmin(admin.ModelAdmin):
                 profile = Profile.objects.filter(user=obj.sender).first()
                 profile.isCoach = True
                 profile.save()
-                new_coachProfile = CoachProfile(user=obj.sender)
+                new_coachProfile = CoachProfile(user=obj.sender, description=obj.note)
                 new_coachProfile.save()
             obj.delete()
 

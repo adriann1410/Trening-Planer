@@ -3,10 +3,18 @@ from django.contrib.auth.decorators import login_required
 
 from .forms import ScheduleForm, ScheduleEditForm
 from .models import Schedule, Workout, Exercise, Plan, Calendar
+from coach.models import CoachProfile
 
 @login_required
 def my_workout(request):
     workouts = Workout.objects.filter(author=request.user).all()
+    coachProfile = CoachProfile.objects.filter(user=request.user).first()
+    if coachProfile:
+        my_pupils = coachProfile.pupils.all()
+        print(my_pupils[0])
+        return render(request, 'my_workout.html', {'workouts': workouts,
+                                                   'my_pupils': my_pupils})
+
     return render(request, 'my_workout.html', {'workouts': workouts})
 
 @login_required
@@ -55,6 +63,8 @@ def add_workout(request):
 def edit_workout(request, pk):
     workout = get_object_or_404(Workout, id=pk)
     schedules = Workout.schedules.get_all_for(id=pk)
+    white_list = request.user.my_coaches.all()
+    print(white_list)
     if workout.author.id not in [request.user.id]:
         message = "You have no permissions to edit this workout"
         return render(request, 'workout_error.html', {'message': message})

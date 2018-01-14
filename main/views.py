@@ -44,7 +44,7 @@ def userProfile(request, pk):
 
         if profile.isCoach:
                 form = CommentForm()
-                coach = user.coachprofile
+                coach = user.coach_profile
                 comments = reversed(coach.comments.all())
                 return render(request, 'coachProfile.html', {'coach': coach, 'comments': comments, 'form': form})
         else:
