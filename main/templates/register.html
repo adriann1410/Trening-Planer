@@ -8,7 +8,7 @@
         </div>
     </div>
     <div class="row">
-    <div class="col-md-4 offset-md-4">
+    <div class="col-md-6 offset-md-3 jumbotron">
         <form method="post">
             {% csrf_token %}
             <div>
@@ -18,25 +18,34 @@
                     </div>
                 {% endif %}
             </div>
-
-          <div class="form-group">
-              Email:
-              {{ form.email }}<br>
-              Password:
-              {{ form.password }}
-              <br>
-              <label class="custom-control custom-checkbox">
-              <input type="checkbox" class="custom-control-input" required>
-              <span class="custom-control-indicator"></span>
-              <span class="custom-control-description">Accept terms of use</span>
-            </label>
-
-          </div>
-
-
-
-
-          <button type="submit" class="btn btn-primary" >Submit</button>
+            <div class="form-group row justify-content-center">
+                <label for="inputEmail" class="col-sm-4 col-form-label">Email:</label>
+                <div class="">
+                    {{ form.email }}<br>
+                </div>
+            </div>
+            <div class="form-group row justify-content-center">
+                <label for="inputPassword" class="col-sm-4 col-form-label">Password:</label>
+                <div class="">
+                {{ form.password }}
+                </div>
+            </div>
+            <div class="form-group row justify-content-center">
+                <label for="inputPassword" class="col-sm-4 col-form-label">Confirm password:</label>
+                <div class="">
+                {{ form.password }}
+                </div>
+            </div>
+            <div class="form-group row justify-content-center">
+                <label class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" required>
+                    <span class="custom-control-indicator"></span>
+                    <span class="custom-control-description">Accept terms of use</span>
+                </label>
+            </div>
+            <div class="form-group row justify-content-center">
+                <button type="submit" class="btn btn-primary" >Submit</button>
+            </div>
         </form>
     </div>
   </div>
