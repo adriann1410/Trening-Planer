@@ -19,6 +19,9 @@
                      <a href="/user/{{ coach.user_id }}" style="color: inherit">
                      <h5 class="mt-0">{{ coach.user.first_name }} {{ coach.user.last_name }}</h5></a>
                          <p>{{ coach.description | linebreaks }}</p>
+                         <br>
+                         <a href={% url 'collaborate' pk=coach.user_id %}><button type="button" class="btn btn-success">Start Collaboration</button></a>
+
                     </div>
                 </div>
 

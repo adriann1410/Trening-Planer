@@ -49,7 +49,8 @@ class Workout(models.Model):
         Trening tj. rozkłady ćwiczeń, autor, trener, data
     '''
     name = models.CharField(max_length=200, default="New workout")
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    author = models.ForeignKey(User, on_delete=models.CASCADE,
+                               related_name='my_workouts')
     coach = models.ForeignKey(CoachProfile, null=True)
     created = models.DateTimeField(auto_now_add=True)
 
