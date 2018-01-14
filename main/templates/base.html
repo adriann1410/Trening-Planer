@@ -50,14 +50,15 @@
                         <span class="caret"></span>
                       </button>
                       <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                          <a  href={% url 'index' %}><button  class="dropdown-item ratebtn" type="button" onclick="">My Profile</button></a>
                           <a  href={% url 'editProfile' %}><button  class="dropdown-item ratebtn" type="button" onclick="">Edit Profile</button></a>
                           <a href={% url 'logout' %}><button  class="dropdown-item ratebtn" type="button">Logout</button></a>
 
                       </div>
           </div>
       {% else %}
-          <span class="badge badge-secondary"><a class="nav-link" href={% url 'register' %}>Rejestracja</a></span>|
-          <span class="badge badge-secondary"><a class="nav-link" href={% url 'login' %}>Zaloguj</a></span>
+          <span class="badge badge-secondary"><a class="nav-link" href={% url 'register' %}>New account</a></span>|
+          <span class="badge badge-secondary"><a class="nav-link" href={% url 'login' %}>Log in</a></span>
         {% endif %}
       </span>
   </div>

@@ -12,7 +12,7 @@
 
                 <div class="card" style="width: 100%">
 
-                  <h4 class="card-header">Znajomi:</h4>
+                  <h4 class="card-header">Friends:</h4>
                     {% if friends %}
                       <div class="card-body">
                       <ul class="list-unstyled">
@@ -31,7 +31,7 @@
                       </ul>
                     {% else %}
                         <div class="p-4" >
-                            <h5 class="font-weight-light">Twoja lista jest pusta</h5>
+                            <h5 class="font-weight-light">Your friends list is empty</h5>
                         </div>
                     {% endif %}
                   </div>
@@ -41,7 +41,7 @@
         <div class="row">
             <div class="card" style="width: 100%">
 
-                    <h4 class="card-header">Zaproszenia do znajomych:</h4>
+                    <h4 class="card-header">Friends invitations:</h4>
                     {% if pending %}
                     <div class="card-body">
                         <ul class="list-unstyled">
@@ -57,7 +57,7 @@
                     </div>
                     {% else %}
                         <div class="p-4">
-                            <h5 class="font-weight-light">Nie masz zaproszeń</h5>
+                            <h5 class="font-weight-light">You have no invitations</h5>
                         </div>
                     {% endif %}
             </div>
