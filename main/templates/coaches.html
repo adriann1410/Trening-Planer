@@ -20,15 +20,20 @@
                      <h5 class="mt-0">{{ coach.user.first_name }} {{ coach.user.last_name }}</h5></a>
                          <p>{{ coach.description | linebreaks }}</p>
                          <br>
-                         <a href={% url 'collaborate' pk=coach.user_id %}><button type="button" class="btn btn-success">Start Collaboration</button></a>
+
 
                     </div>
                 </div>
-
-                      <a href="user/{{ coach.user_id }}" ><button class="btn btn-default" type="button" style="background-color: #ffcc00">
-                          ocena : <span> {{ avg_rates|get_item:coach.user.id }} </span>
+                <div class="row justify-content-between mt-4">
+                    <div class="col-md-4">
+                        <a href="user/{{ coach.user_id }}" ><button class="btn btn-default" type="button" style="background-color: #ffcc00">
+                          rate : <span> {{ avg_rates|get_item:coach.user.id }} </span>
                       </button></a>
-
+                    </div>
+                    <div class="col-md-4">
+                        <a href={% url 'collaborate' pk=coach.user_id %}><button type="button" class="btn btn-success">Start Collaboration</button></a>
+                    </div>
+                </div>
 
             </div>
         </div>
@@ -37,12 +42,14 @@
 
         <br>
         <br>
-            <div class="row">
-                <div class="col-md-4-offset-6">
+            <div class="row justify-content-center">
+                <div class="col-md-12">
                     <div class="jumbotron jumbotron-fluid">
-                      <div class="container">
-                        <h1 class="display-3">Przepraszamy</h1>
-                        <p class="lead">Na obecną chwile brak trenerów w twojej okolicy.</p>
+                      <div class="row justify-content-center">
+                          <div class="ocl-md-6">
+                              <h1 class="display-3">Sorry!</h1>
+                                <p class="lead">It looks like there are currently no trainers available.</p>
+                          </div>
                       </div>
                     </div>
                 </div>

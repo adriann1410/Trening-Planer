@@ -8,42 +8,41 @@
 
         {% profile_navbar current_page="friends" user_id=request.user.id %}
 
-        <div class="row">
+        <div class="row mt-4">
 
                 <div class="card" style="width: 100%">
-                {% if friends %}
 
-                  <h4 class="card-header">Znajomi:</h4>
+                  <h4 class="card-header">Friends:</h4>
+                    {% if friends %}
+                      <div class="card-body">
+                      <ul class="list-unstyled">
+                        {% for friend in friends %}
+                            <li class="media">
+                            <img class="mr-3" src="{{ media|placeholder_image }}" alt="Generic placeholder image" style="width: 64px; height: 64px;">
+                            <div class="media-body">
+                              <h5 class="mt-0 mb-1">{{ friend.email }} </h5>
+                                <a style="text-decoration:none" href={% url 'new_message' pk=friend.id %} ><i class="fa fa-envelope-o fa-2x" aria-hidden="true"></i></a><a style="padding-left: 10px" href={% url 'userProfile' pk=friend.id %}><i class="fa fa-user fa-2x" aria-hidden="true"></i></a><a style="padding-left: 10px" href="#"><i class="fa fa-ban fa-2x" aria-hidden="true"></i></a>
+                            </div>
 
-                  <div class="card-body">
-                  <ul class="list-unstyled">
-                    {% for friend in friends %}
-                        <li class="media">
-                        <img class="mr-3" src="{{ media|placeholder_image }}" alt="Generic placeholder image" style="width: 64px; height: 64px;">
-                        <div class="media-body">
-                          <h5 class="mt-0 mb-1">{{ friend.email }} </h5>
-                            <a style="text-decoration:none" href={% url 'new_message' pk=friend.id %} ><i class="fa fa-envelope-o fa-2x" aria-hidden="true"></i></a><a style="padding-left: 10px" href={% url 'userProfile' pk=friend.id %}><i class="fa fa-user fa-2x" aria-hidden="true"></i></a><a style="padding-left: 10px" href="#"><i class="fa fa-ban fa-2x" aria-hidden="true"></i></a>
+
+                            </li>
+                            {% if not forloop.last %}<hr>{% endif %}
+                        {% endfor %}
+                      </ul>
+                    {% else %}
+                        <div class="p-4" >
+                            <h5 class="font-weight-light">Your friends list is empty</h5>
                         </div>
-
-
-                        </li>
-                        {% if not forloop.last %}<hr>{% endif %}
-                    {% endfor %}
-                  </ul>
+                    {% endif %}
                   </div>
 
-                        {% else %}
-                    <h3>Twoja lista jest pusta</h3>
-                {% endif %}
                 </div>
-
-
-        </div>
     <hr>
         <div class="row">
             <div class="card" style="width: 100%">
-                {% if pending %}
-                    <h4 class="card-header">Zaproszenia do znajomych:</h4>
+
+                    <h4 class="card-header">Friends invitations:</h4>
+                    {% if pending %}
                     <div class="card-body">
                         <ul class="list-unstyled">
                         {% for inv in pending %}
@@ -56,9 +55,11 @@
                         {% endfor %}
                         </ul>
                     </div>
-                {% else %}
-                    <h3>Nie masz zaproszeń</h3>
-                {% endif %}
+                    {% else %}
+                        <div class="p-4">
+                            <h5 class="font-weight-light">You have no invitations</h5>
+                        </div>
+                    {% endif %}
             </div>
         </div>
 
