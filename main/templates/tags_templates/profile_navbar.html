@@ -47,10 +47,17 @@
                         {% endif %}
 
                         {% if request.user.id == user_id %}
+                            {% if not request.user.profile.isCoach %}
                             <li class="nav-item">
                                 <a class="nav-link {% if current == 'become_coach' %}active{% endif %}" href={% url 'become_coach' %}><i class="fa fa-level-up" aria-hidden="true"></i>
                                     Zostań Trenerem</a>
                             </li>
+                                {% else %}
+                                <li class="nav-item">
+                                <a class="nav-link {% if current == 'coach_panel' %}active{% endif %}" href={% url 'coach_panel' %}><i class="fa fa-level-up" aria-hidden="true"></i>
+                                    Coach Panel</a>
+                                </li>
+                            {% endif %}
                         {% endif %}
 
                     </ul>

@@ -10,7 +10,11 @@ from workout.views import my_workout
 
 @login_required
 def coach_panel(request):
-    return render(request, 'coach_panel.html', {'pupils': None})
+    profile = Profile.objects.get(id=request.user.id)
+    if profile.isCoach:
+        pupils = request.user.coach_profile.pupils.all()
+        return render(request, 'coach_panel.html', {'pupils': pupils})
+    return redirect(to=my_workout)
 
 @login_required
 def start_collaboration(request, pk):

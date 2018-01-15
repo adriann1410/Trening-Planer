@@ -9,8 +9,8 @@ class CoachProfileManager(models.Manager):
         return super().get_queryset()
 
     def get_user_coaches(self, user_id):
-
-        return super().get_queryset()
+        query = CoachProfile.objects.filter(pupils__id__contains=user_id).all()
+        return query
 
 
 class CoachProfile(models.Model):
@@ -19,6 +19,8 @@ class CoachProfile(models.Model):
                                 on_delete=models.CASCADE,
                                 related_name='coach_profile')
     description = models.TextField(max_length=500)
+
+    objects = CoachProfileManager()
 
     def __str__(self):
         return self.user.username
