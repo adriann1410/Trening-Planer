@@ -36,7 +36,11 @@ def coachesList(request):
         average_rate = Comment.objects.filter(coach_id=coach.id).aggregate(Avg('commentRate'))
         avg_rates[coach.user.id] = average_rate['commentRate__avg']
 
-
+    if request.user.is_authenticated():
+        my_coaches = CoachProfile.objects.get_user_coaches(request.user.id)
+        return render(request, "coaches.html", {'coaches': coaches,
+                                                'avg_rates': avg_rates,
+                                                'my_coaches': my_coaches})
     return render(request, "coaches.html", {'coaches': coaches, 'avg_rates': avg_rates})
 
 

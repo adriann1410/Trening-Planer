@@ -55,5 +55,29 @@
                 </div>
             </div>
     {% endif %}
+
+    {% if my_coaches %}
+        <div class="row">
+            <div class="col-md-6-offset-3"><br>
+            <h3>Your coaches:</h3>
+            <hr>
+                    {% for coach in my_coaches %}
+                        <div class="card">
+                            <div class="card-body">
+                               <a href={% url 'userProfile' pk=coach.user.id %}>
+                                <h4 class="card-title">
+                                    {{ coach.user.email }}
+                                </h4>
+                               </a>
+                                <div class="card-text">
+                                    {{ coach.description }}
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+
+            </div>
+        </div>
+    {% endif %}
 </div>
 {% endblock %}

@@ -4,54 +4,5 @@
 
 {% block content %}
 
-    <div class="container">
-        {% workout_navbar %}
-
-        <div class="row">
-            <div class="col-lg-offset-2">
-                {% extends 'base.html' %}
-{% load templatetags %}
-{% load static %}
-
-{% block content %}
-
-    <div class="container">
-        {% workout_navbar %}
-
-        <div class="row">
-            <div class="col-lg-offset-2">
-                <table class="table">
-                  <thead class="thead-inverse">
-                    <tr>
-                      <th>#</th>
-                      <th>Workout</th>
-                      <th>Author</th>
-                      <th>Date</th>
-                      <th>Repeats</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                  {% for plan in calendar.plans %}
-                    <tr>
-                      <th scope="row">{{ plan.id }}</th>
-                      <td>{{ plan.workout.name }}</td>
-                      <td>{{ plan.author.email }}</td>
-                      <td>{{ plan.date }}</td>
-                      <td>{{ plan.repeats }}</td>
-                    </tr>
-                  {% endfor %}
-
-                  </tbody>
-                </table>
-            </div>
-        </div>
-
-    </div>
-
-{% endblock %}
-            </div>
-        </div>
-
-    </div>
 
 {% endblock %}
