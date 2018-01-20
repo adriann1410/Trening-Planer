@@ -63,9 +63,11 @@ def add_workout(request):
 def edit_workout(request, pk):
     workout = get_object_or_404(Workout, id=pk)
     schedules = Workout.schedules.get_all_for(id=pk)
-    white_list = request.user.my_coaches.all()
-    print(white_list)
-    if workout.author.id not in [request.user.id]:
+    white_list = CoachProfile.objects.get_user_coaches(workout.author.id)
+    white_list = [x.user_id for x in white_list]
+    white_list.append(workout.author.id)
+
+    if request.user.id not in white_list:
         message = "You have no permissions to edit this workout"
         return render(request, 'workout_error.html', {'message': message})
 

@@ -6,7 +6,7 @@ from django.contrib.auth.hashers import make_password
 from django.core.mail import send_mail
 from django.conf import  settings
 
-from .forms import LoginForm, UserForm, UserUpdateForm, ProfileUpdateForm, CommentForm, ProfileImageForm
+from .forms import LoginForm, UserForm, UserUpdateForm, ProfileUpdateForm, CommentForm, ProfileImageForm, CoachProfileUpdateForm
 from coach.models import Comment
 
 from social.models import Friend
@@ -27,7 +27,7 @@ def userProfile(request, pk):
 
         if form.is_valid():
             new_comment = Comment(
-                                coach=User.objects.get(id=pk).coachprofile,
+                                coach=User.objects.get(id=pk).coach_profile,
                                 author=request.user,
                                 content=form.cleaned_data.get("content"),
                                 commentRate= form.cleaned_data.get("commentRate")
@@ -60,6 +60,7 @@ def userProfileEdit(request):
         profile_update = ProfileUpdateForm(request.POST, instance=user_profile)
         profile_image_form = ProfileImageForm(data=request.POST, files=request.FILES, instance=user_profile)
         user_update = UserUpdateForm(request.POST, instance=current_user)
+        coach_description_form = CoachProfileUpdateForm(request.POST)
 
 
         if user_update.is_valid():
@@ -71,13 +72,28 @@ def userProfileEdit(request):
         if profile_update.is_valid():
             profile_update.save(user_id=request.user.id)
 
+        if user_profile.isCoach:
+            if coach_description_form.is_valid():
+                user_coach_profile = current_user.coach_profile
+                user_coach_profile.description = coach_description_form.cleaned_data.get('description')
+                user_coach_profile.save()
+
         return redirect(to=userProfileEdit)
 
     update_profile_form = ProfileUpdateForm()
     update_user_form = UserUpdateForm()
     profile_image_form = ProfileImageForm()
 
-    return render(request, "profile_edit.html", {'image_form': profile_image_form, 'profile_form': update_profile_form, 'user_form': update_user_form, 'user': current_user, 'user_profile': user_profile})
+    if user_profile.isCoach:
+        coach_description_form = CoachProfileUpdateForm()
+        return render(request, "profile_edit.html",
+                      {'image_form': profile_image_form, 'profile_form': update_profile_form,
+                       'user_form': update_user_form, 'user': current_user,
+                       'user_profile': user_profile, 'coach_update': coach_description_form})
+
+    return render(request, "profile_edit.html", {'image_form': profile_image_form, 'profile_form': update_profile_form,
+                                                 'user_form': update_user_form, 'user': current_user,
+                                                 'user_profile': user_profile})
 
 
 def loginView(request):
@@ -133,7 +149,15 @@ def registerView(request):
             else:
                 message = "Confirmation mail has been send, you can now login"
                 message_type = "success"
-                return render(request, "register.html", context={'title': "Register", 'form': form, 'message': message, 'message_type': message_type})
+                return render(request, "register.html", context={'title': "Register",
+                                                                 'form': form,
+                                                                 'message': message,
+                                                                 'message_type': message_type})
+        else:
+            return render(request, "register.html", context={'title': "Register",
+                                                             'form': UserForm,
+                                                             'message': 'Passwords must match',
+                                                             'message_type': 'danger'})
     else:
         form = UserForm
     return render(request, "register.html", context={'title':"Register", 'form': form})

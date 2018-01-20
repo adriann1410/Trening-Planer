@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
+from django.core.exceptions import ValidationError
 
 from .models import Profile
 
@@ -11,7 +12,16 @@ class LoginForm(forms.Form):
 
 class UserForm(forms.Form):
     email = forms.EmailField(max_length=100, required=True)
-    password = forms.CharField(widget=forms.PasswordInput(), required=True, max_length=100)
+    password = forms.CharField(widget=forms.PasswordInput(attrs={'id': 'inputPassword'}),
+                               required=True, max_length=100)
+    password2 = forms.CharField(widget=forms.PasswordInput(attrs={'id': 'inputPassword2'}),
+                                required=True, max_length=100)
+
+    def clean(self):
+        clean_data = self.cleaned_data
+        if clean_data.get('password') != clean_data.get('password2'):
+            raise ValidationError("Passwords must match")
+        return clean_data
 
 
 class UserUpdateForm(forms.ModelForm):
@@ -56,6 +66,9 @@ class ProfileUpdateForm(forms.ModelForm):
         update_profile_model.save()
         return super(ProfileUpdateForm, self).save(commit=False)
 
+
+class CoachProfileUpdateForm(forms.Form):
+    description = forms.CharField(widget=forms.Textarea(attrs={'rows': 4, 'cols': 120, 'class': 'form-control col-md-8 col-sm-12 mr-4'}))
 
 
 class ProfileImageForm(forms.ModelForm):

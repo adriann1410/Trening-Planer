@@ -33,6 +33,11 @@ def conversation(request, pk):
     return render(request, 'conversation.html', {'form': form, 'conversation': _conversation, 'messages': messages})
 
 @login_required
+def delete_friend(request, pk):
+    Friend.lose_friend(request.user, User.objects.get(id=pk))
+    return redirect(to=friends_list)
+
+@login_required
 def new_message(request, pk):
     receiver = User.objects.get(id=pk)
     _conversation = Conversation.list.between(request.user, receiver)

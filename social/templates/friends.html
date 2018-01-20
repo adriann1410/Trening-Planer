@@ -21,7 +21,7 @@
                             <img class="mr-3" src="{{ media|placeholder_image }}" alt="Generic placeholder image" style="width: 64px; height: 64px;">
                             <div class="media-body">
                               <h5 class="mt-0 mb-1">{{ friend.email }} </h5>
-                                <a style="text-decoration:none" href={% url 'new_message' pk=friend.id %} ><i class="fa fa-envelope-o fa-2x" aria-hidden="true"></i></a><a style="padding-left: 10px" href={% url 'userProfile' pk=friend.id %}><i class="fa fa-user fa-2x" aria-hidden="true"></i></a><a style="padding-left: 10px" href="#"><i class="fa fa-ban fa-2x" aria-hidden="true"></i></a>
+                                <a style="text-decoration:none" href={% url 'new_message' pk=friend.id %} ><i class="fa fa-envelope-o fa-2x" aria-hidden="true"></i></a><a style="padding-left: 10px" href={% url 'userProfile' pk=friend.id %}><i class="fa fa-user fa-2x" aria-hidden="true"></i></a><a style="padding-left: 10px" href={% url 'friend_remove' pk=friend.id %}><i class="fa fa-ban fa-2x" aria-hidden="true"></i></a>
                             </div>
 
 
@@ -37,6 +37,7 @@
                   </div>
 
                 </div>
+        </div>
     <hr>
         <div class="row">
             <div class="card" style="width: 100%">
