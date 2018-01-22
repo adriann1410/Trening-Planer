@@ -1,18 +1,3 @@
-// $('.ratebtn').on('click', function(event){
-//     event.preventDefault();
-//     var id = $(this).attr("data-iterator")
-//     var rate = $('#'+id)
-//     $.ajax({
-//         url : '/rate_coach/',
-//         type : 'POST',
-//         data : { coach_id : $(this).attr("data-id"), rate : $(this).attr("data-rate")},
-//
-//         success : function(response){
-//            rate.html(' ' + response);
-//         }
-//     });
-// });
-
 function getCookie(name) {
     var cookieValue = null;
     if (document.cookie && document.cookie != '') {
@@ -42,3 +27,4 @@ $.ajaxSetup({
         }
     }
 });
+

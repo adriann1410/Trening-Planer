@@ -4,5 +4,27 @@
 
 {% block content %}
 
+    <script src="{% static 'js/monthpicker.js' %}" language="Javascript" type="text/javascript"></script>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-offset-2">
+
+            </div>
+            <div class="col-lg-8">
+                <div class="form-group">
+                    <form method="post">
+                        {% csrf_token %}
+                        <h3><label for="PlainButton">Select date</label></h3>
+                        <input class="form-control" id="PlainButton" name="calendar-date" type="text" /><br>
+                        <button type="submit" class="btn">Search <i class="fa fa-calendar" aria-hidden="true"></i></button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    {% calendar_widget month year %}
 
 {% endblock %}

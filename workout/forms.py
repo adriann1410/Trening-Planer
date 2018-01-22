@@ -12,4 +12,3 @@ class ScheduleEditForm(forms.ModelForm):
     class Meta:
         model = Schedule
         fields = ['series', 'reps', 'weight']
-

@@ -66,7 +66,7 @@ class Workout(models.Model):
             raise Http404
 
     def __str__(self):
-        return str(self.id)
+        return str(self.name)
 
 
 class Schedule(models.Model):
@@ -110,14 +110,15 @@ class Calendar(models.Model):
     def __str__(self):
         return str(self.id)
 
-
+#
 class Plan(models.Model):
-    author = models.ForeignKey(User)
-    workout = models.ForeignKey(Workout)
-    calendar = models.ForeignKey(Calendar, related_name='plans')
-    date = models.DateTimeField()
+    owner = models.ForeignKey(User, related_name='workout_plans', default=None)
+    author = models.ForeignKey(User, default=None)
+    workout = models.ForeignKey(Workout, null=True)
+    # calendar = models.ForeignKey(Calendar, related_name='plans')
+    date_on = models.DateField(null=True)
     repeats = models.CharField(max_length=10, choices=PLAN_REPEATS, null=True)
 
     def __str__(self):
         return str(self.id)
-
+#

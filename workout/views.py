@@ -1,9 +1,12 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 
-from .forms import ScheduleForm, ScheduleEditForm
+from .forms import ScheduleForm
 from .models import Schedule, Workout, Exercise, Plan, Calendar
 from coach.models import CoachProfile
+
+import datetime
+
 
 @login_required
 def my_workout(request):
@@ -23,12 +26,55 @@ def workout_detail(request, pk):
         pk - workout.id
     """
     schedules = Workout.schedules.get_all_for(id=pk)
+    if request.method == 'POST':
+        _date = request.POST['plan-date']
+
+        workout = Workout.objects.filter(id=pk).first()
+        if _date and workout:
+            new_plan = Plan(owner=request.user,
+                            author=request.user,
+                            workout=workout,
+                            date_on=_date)
+            new_plan.save()
+            message = "New plan created"
+            mode = "success"
+            return render(request, 'workout_detail.html', {"schedules": schedules,
+                                                           'workout_pk': pk,
+                                                           'message': message,
+                                                           'mode': mode})
+        message = "Please select the date"
+        mode = "danger"
+        return render(request, 'workout_detail.html', {"schedules": schedules,
+                                                       'workout_pk': pk,
+                                                       'message': message,
+                                                       'mode': mode})
+
     return render(request, 'workout_detail.html', {"schedules": schedules, 'workout_pk': pk})
 
 @login_required
 def calendar(request):
     _calendar = Calendar.get_calendar(request.user)
-    return render(request, 'calendar.html', {'calendar' : _calendar})
+
+    if request.method == 'POST':
+        date = request.POST['calendar-date']
+        if date:
+            month, year = date.split('/')
+            return render(request, 'calendar.html', {'calendar': _calendar,
+                                                     'month': month,
+                                                     'year': year})
+    today = datetime.date.today()
+    return render(request, 'calendar.html', {'calendar' : _calendar,
+                                             'month': today.month,
+                                             'year': today.year})
+
+
+@login_required
+def create_plan(request, pk):
+    if request.method == 'POST':
+
+        pass
+
+    return render(request, "planworkout.html")
 
 @login_required
 def add_workout(request):

@@ -3,6 +3,10 @@ from django import template
 from social.models import Friend, Message, Invite
 from django.contrib.auth.models import User
 
+from workout.models import PLAN_REPEATS as repeat_choices
+
+import datetime
+
 register = template.Library()
 
 
@@ -57,4 +61,10 @@ def workout_navbar(context):
 @register.assignment_tag()
 def mark2delete(workout_id):
     return workout_id
+
+@register.inclusion_tag("tags_templates/calendar_widget.html", takes_context=True)
+def calendar_widget(context, month, year):
+    _plans = context['request'].user.workout_plans.filter(date_on__month=month).order_by('date_on')
+    return {'request' : context['request'], 'month': month, 'year': year, 'plans': _plans}
+
 
