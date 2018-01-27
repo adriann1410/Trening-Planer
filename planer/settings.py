@@ -31,6 +31,9 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'coach',
+    'workout',
+    'social',
     'main.apps.MainConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -59,6 +62,7 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
+                'django.template.context_processors.media',
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
@@ -115,8 +119,25 @@ USE_L10N = True
 USE_TZ = True
 
 
+# Email
+
+EMAIL_HOST = 'smtp.gmail.net'
+EMAIL_HOST_USER = 'workoutplanner.pk@gmail.com'
+EMAIL_HOST_PASSWORD = 'adri96pl'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
+
+PLACEHOLDER_IMAGE_PATH = "placeholders/profile-placeholder.png"
+
+LOGIN_REDIRECT_URL = '/profile/'
+LOGIN_URL = '/login/'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 STATIC_URL = '/static/'
 

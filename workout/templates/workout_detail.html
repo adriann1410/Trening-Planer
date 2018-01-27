@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load templatetags %}
+{% load static %}
+
+{% block content %}
+
+    <div class="container">
+        {% workout_navbar %}
+
+        <div class="row">
+            <div class="col-lg-offset-2">
+            {% if message %}
+                <div class="alert alert-{{ mode }}" role="alert">
+                  {{ message }}
+                </div>
+            {% endif %}
+                <table class="table">
+                  <thead class="thead-inverse">
+                    <tr>
+                      <th>#</th>
+                      <th>Exercise</th>
+                      <th>Series</th>
+                      <th>Reps</th>
+                      <th>Weight</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  {% for schedule in schedules %}
+                    <tr>
+                      <th scope="row">{{ forloop.counter }}</th>
+                      <td>{{ schedule.exercise.name }}</td>
+                      <td>{{ schedule.series }}</td>
+                      <td>{{ schedule.reps }}</td>
+                      <td>{{ schedule.weight }}</td>
+                    </tr>
+                  {% endfor %}
+
+                  </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+             <div class="col-lg-offset-2">
+                 <a href={% url 'edit_workout' pk=workout_pk %}><button class="btn btn-success">Edit</button> </a>
+                 <div class="form-group">
+                     <form method="post">
+                         {% csrf_token %}
+                         <label for="date">Date:</label>
+                        <input class="form-control" type="date" id="date" name="plan-date">
+                        <br>
+                         <button type="submit" class="btn btn-warning">Create Plan</button>
+                     </form>
+                </div>
+             </div>
+        </div>
+
+    </div>
+
+{% endblock %}

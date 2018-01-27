@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load templatetags %}
+
+{% block content %}
+
+    <div class="container">
+
+        {% profile_navbar current_page="inbox" user_id=request.user.id %}
+
+
+        <div class="row">
+            <div class="col-md-6-offset-3"><br>
+            <h3>Your conversations:</h3>
+            <hr>
+                {% if conversations %}
+                    {% for conv in conversations %}
+                        <div class="card">
+                            <div class="card-body">
+                               <a href={% url 'conversation' pk=conv.id %}>
+                                <h4 class="card-title">
+                                    {% conversationReceiver conv %}
+                                </h4>
+                               </a>
+                                <div class="card-text">
+                                    New message
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <h5>No message</h5>
+                    <hr>
+                    <a href={% url 'friends_list' %}>Send message to your friends</a>
+                {% endif %}
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}

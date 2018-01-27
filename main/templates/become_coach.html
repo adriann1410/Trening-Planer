@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load templatetags %}
+
+{% block content %}
+
+     <div class="container">
+        <div class="row">
+        <div class="col-lg-8 offset-lg-2">
+            {% if message %}
+                <div class="alert alert-success" role="alert">
+                  <h3>{{ message }}</h3>
+                </div>
+                <a href={% url 'userProfile' pk=request.user.id %}><button type="button" class="btn btn-warning">Go Back</button></a>
+                {% elif error %}
+                <div class="alert alert-warning" role="alert">
+                  <h3>{{ error }}</h3>
+                </div>
+                <a href={% url 'userProfile' pk=request.user.id %}><button type="button" class="btn btn-warning">Go Back</button></a>
+                {% else %}
+                <h3>Become our coach ! <br><small>Please, select payment method and leave a short note about yourself</small></h3>
+            {% endif %}
+         <hr>
+        </div>
+            <div class="col-lg-6 offset-lg-3">
+
+                {% if form %}
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="payment_id">Payment method:</label>
+                            {{ form.payment_method }}
+                        </div>
+                        <div class="form-group">
+                            <label for="note_id">Note:</label>
+                            {{ form.note }}
+                        </div>
+
+                    <button type="submit" class="btn btn-primary">Send</button>
+                    </form>
+
+                {% endif %}
+            </div>
+        </div>
+     </div>
+
+
+{% endblock %}

@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load templatefilters %}
+
+{% block content %}
+<div class = "container">
+    {% if coaches %}
+    {% for coach in coaches %}
+        <div class = "mt-4">
+            <div class = "jumbotron">
+                <div class="media">
+                    <a href="/user/{{ coach.user_id }}" style="color: inherit">
+                    {% if coach.user.profile.image %}
+                    <img class="mr-3" src="{{ coach.user.profile.image.url }}" width="120" height="120">
+                     {% else %}
+                    <img class="mr-3" src="{{ media|placeholder_image }}" width="120" height="120">
+                    {% endif %}</a>
+                     <div class="media-body">
+                     <a href="/user/{{ coach.user_id }}" style="color: inherit">
+                     <h5 class="mt-0">{{ coach.user.first_name }} {{ coach.user.last_name }}</h5></a>
+                         <p>{{ coach.description | linebreaks }}</p>
+                         <br>
+
+
+                    </div>
+                </div>
+                <div class="row justify-content-between mt-4">
+                    <div class="col-md-4">
+                        <a href="user/{{ coach.user_id }}" ><button class="btn btn-default" type="button" style="background-color: #ffcc00">
+                          rate : <span> {{ avg_rates|get_item:coach.user.id }} </span>
+                      </button></a>
+                    </div>
+                    <div class="col-md-4">
+                        <a href={% url 'collaborate' pk=coach.user_id %}><button type="button" class="btn btn-success">Start Collaboration</button></a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    {% endfor %}
+    {% else %}
+
+        <br>
+        <br>
+            <div class="row justify-content-center">
+                <div class="col-md-12">
+                    <div class="jumbotron jumbotron-fluid">
+                      <div class="row justify-content-center">
+                          <div class="ocl-md-6">
+                              <h1 class="display-3">Sorry!</h1>
+                                <p class="lead">It looks like there are currently no trainers available.</p>
+                          </div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+    {% endif %}
+
+    {% if my_coaches %}
+        <div class="row">
+            <div class="col-md-6-offset-3"><br>
+            <h3>Your coaches:</h3>
+            <hr>
+                    {% for coach in my_coaches %}
+                        <div class="card">
+                            <div class="card-body">
+                               <a href={% url 'userProfile' pk=coach.user.id %}>
+                                <h4 class="card-title">
+                                    {{ coach.user.email }}
+                                </h4>
+                               </a>
+                                <div class="card-text">
+                                    {{ coach.description }}
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+
+            </div>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

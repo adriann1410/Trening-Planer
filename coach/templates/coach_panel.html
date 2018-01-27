@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load templatetags %}
+
+{% block content %}
+
+    <div class="container">
+
+        {% profile_navbar current_page="coach_panel" user_id=request.user.id %}
+
+
+        <div class="row">
+            <div class="col-md-6-offset-3"><br>
+            <h3>Coach Panel:</h3>
+            <hr>
+                {% if pupils %}
+                    {% for pupil in pupils %}
+                        <div class="card">
+                            <div class="card-body">
+                               <a href={% url 'userProfile' pk=pupil.id %}>
+                                <h4 class="card-title">
+                                    {{ pupil.email }}
+                                </h4>
+                               </a>
+                                <div class="card-text">
+                                    ...
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <h5>You have no pupils</h5>
+                {% endif %}
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}

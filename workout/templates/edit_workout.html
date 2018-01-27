@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load templatetags %}
+{% load static %}
+
+{% block content %}
+
+    <div class="container">
+        {% workout_navbar %}
+
+        <div class="row">
+            <div class="col-lg-offset-2">
+                <h3>Edit workout:</h3>
+            <form method="post">
+            {% csrf_token %}
+                  {% for schedule in schedules %}
+                      <div class="col-lg-offset-2">
+                        <div class="row" id="exerciseSelectDiv">
+                                <div class="form-row">
+                                    <div class="col">
+                                        <label>{{ forloop.counter }}</label>
+                                    </div>
+                                    <div class="col">
+                                        <label>{{ schedule.exercise.name }}</label>
+                                    </div>
+                                    <div class="col">
+                                        <label for="seriesSelect">Series</label>
+                                        {{ schedule.series }}
+                                        <input type="number" min="0" class="form-control" id="seriesSelect" placeholder="0" name="seriesInputs[]">
+                                    </div>
+                                    <div class="col">
+                                        <label for="repsSelect">Reps</label>
+                                        {{ schedule.reps }}
+                                        <input type="number" min="0" class="form-control" id="repsSelect" placeholder="0" name="repsInputs[]">
+                                    </div>
+                                    <div class="col">
+                                        <label for="weightSelect">Weight [kg]</label>
+                                        {{ schedule.weight }}
+                                        <input type="number" min="0" class="form-control" id="weightSelect" placeholder="0" name="weightInputs[]">
+                                    </div>
+                            </div>
+                            <br>
+                        </div>
+                    </div>
+                      <br>
+                  {% endfor %}
+            <br>
+                    <a href={% url 'workout_detail' pk=workout_pk %}><button class="btn btn-warning">Back</button> </a>
+                    <button type="submit" class="btn btn-primary">Update</button>
+            </form>
+
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}

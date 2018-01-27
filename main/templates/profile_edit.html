@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load templatefilters %}
+{% load templatetags %}
+
+{% block content %}
+
+    <div class="container">
+
+    {% profile_navbar current_page="editProfile" user_id=user.id %}
+
+
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="row mt-5">
+                <div class="col-md-4 col-sm-8">
+
+                    <h3>{{ user.first_name }} {{ user.last_name }}</h3>
+                    {% if user.profile.image %}
+                            <img src="{{ user.profile.image.url }}" width="200" height="200">
+                             {% else %}
+                            <img src="{{ media }}profile_image/profile-placeholder.png" width="200" height="200">
+                            {% endif %}
+                            <br><br>
+
+                        {{ image_form.image }}<br><br>
+
+                </div>
+                <div class="col-md-4 col-sm-8">
+
+                    <h5>User Data</h5>
+                    <hr>
+                    {% horizontal_form fields=user_form %}
+
+                </div>
+                <div class="col-md-4 col-sm-8">
+
+                    <h5>Factors</h5>
+                    <hr>
+                    {% horizontal_form fields=profile_form %}
+
+                </div>
+            </div>
+        {% if coach_update %}
+            <div>
+                <h3>Change profile description</h3>
+                {{ coach_update.description }}
+            </div>
+        {% endif %}
+
+            <div class="row justify-content-end">
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-primary">Update</button>
+                </div>
+            </div>
+        </form>
+
+    </div>
+
+{% endblock %}

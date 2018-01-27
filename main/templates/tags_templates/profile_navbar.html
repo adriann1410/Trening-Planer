@@ -1,0 +1,67 @@
+{% load templatetags %}
+{% isFriend user_id as isUserMyFriend %}
+{% unreadMessages as newMessages %}
+{% getNewInvites as newInvites %}
+
+<div class="row">
+
+                <div class="col-12 ">
+
+                    <ul class="nav justify-content-end nav-tabs">
+
+                            <li class="nav-item">
+                                <a class="nav-link {% if current == 'userProfile' and request.user.id == user_id %}active{% endif %}" href={% url 'userProfile' pk=request.user.id %}>
+                                    <i class="fa fa-user" aria-hidden="true"></i> My Profile</a>
+                            </li>
+
+                        {% if request.user.id == user_id %}
+                            <li class="nav-item">
+                                <a class="nav-link {% if current == 'editProfile' %}active{% endif %}" href={% url 'editProfile' %}><i class="fa fa-cog" aria-hidden="true"></i> Settings</a>
+                            </li>
+                        {% endif %}
+
+
+                        {% if request.user.id == user_id %}
+                            <li class="nav-item">
+                                <a class="nav-link {% if current == 'friends' %}active{% endif %}" href={% url 'friends_list' %}><i class="fa fa-users" aria-hidden="true"></i>
+                                    Friends {% if newInvites %}<span class="badge badge-light">{{ newInvites }}</span>{% endif %}</a>
+                            </li>
+                        {% else %}
+                            {% if not isUserMyFriend %}
+                            <li class="nav-item">
+                                <a class="nav-link " href={% url 'friend_add' pk=user_id %}><i class="fa fa-user-plus" aria-hidden="true"></i> Add Friend</a>
+                            </li>
+                             {% endif %}
+                        {% endif %}
+
+
+                        {% if request.user.id == user_id %}
+                            <li class="nav-item">
+                                <a class="nav-link {% if current == 'inbox' %}active{% endif %}" href={% url 'inbox' %}><i class="fa fa-envelope-o fa-1x" aria-hidden="true"></i>
+                                    Messages{% if newMessages %}<span class="badge badge-light">{{ newMessages }}</span>{% endif %}</a>
+                            </li>
+                        {% else %}
+                            <li class="nav-item">
+                                <a class="nav-link " href={% url 'new_message' pk=user_id %}><i class="fa fa-envelope-o fa-1x" aria-hidden="true"></i> Send message</a>
+                            </li>
+                        {% endif %}
+
+                        {% if request.user.id == user_id %}
+                            {% if not request.user.profile.isCoach %}
+                            <li class="nav-item">
+                                <a class="nav-link {% if current == 'become_coach' %}active{% endif %}" href={% url 'become_coach' %}><i class="fa fa-level-up" aria-hidden="true"></i>
+                                    Become a coach</a>
+                            </li>
+                                {% else %}
+                                <li class="nav-item">
+                                <a class="nav-link {% if current == 'coach_panel' %}active{% endif %}" href={% url 'coach_panel' %}><i class="fa fa-level-up" aria-hidden="true"></i>
+                                    Coach Panel</a>
+                                </li>
+                            {% endif %}
+                        {% endif %}
+
+                    </ul>
+                </div>
+            <br><br>
+
+        </div>
