@@ -14,7 +14,6 @@ def my_workout(request):
     coachProfile = CoachProfile.objects.filter(user=request.user).first()
     if coachProfile:
         my_pupils = coachProfile.pupils.all()
-        print(my_pupils[0])
         return render(request, 'my_workout.html', {'workouts': workouts,
                                                    'my_pupils': my_pupils})
 

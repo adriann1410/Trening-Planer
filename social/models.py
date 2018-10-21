@@ -32,7 +32,11 @@ class MessagesListManager(models.Manager):
 
 class FriendListManager(models.Manager):
     def for_user(self, user):
-        return super().get_queryset().get(current_user=user).users.all()
+        try:
+            friends = super().get_queryset().get(current_user=user).users.all()
+        except Friend.DoesNotExist:
+            friends = None
+        return friends
 
 
 class FriendInviteManager(models.Manager):
