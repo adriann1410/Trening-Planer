@@ -51,7 +51,7 @@ class Workout(models.Model):
     name = models.CharField(max_length=200, default="New workout")
     author = models.ForeignKey(User, on_delete=models.CASCADE,
                                related_name='my_workouts')
-    coach = models.ForeignKey(CoachProfile, null=True)
+    coach = models.ForeignKey(CoachProfile, null=True, on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True)
 
     objects = WorkoutManager()
@@ -87,7 +87,7 @@ class Performance(models.Model):
     '''
         Archiwizacja wykonanych ćwiczeń
     '''
-    schedule = models.OneToOneField(Schedule, related_name='performance')
+    schedule = models.OneToOneField(Schedule, related_name='performance', on_delete=models.CASCADE)
     updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):
@@ -98,7 +98,7 @@ class Calendar(models.Model):
     '''
         Kalendarz treningów
     '''
-    owner = models.ForeignKey(User, null=True)
+    owner = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
 
     @classmethod
     def get_calendar(cls, owner):
@@ -112,9 +112,9 @@ class Calendar(models.Model):
 
 #
 class Plan(models.Model):
-    owner = models.ForeignKey(User, related_name='workout_plans', default=None)
-    author = models.ForeignKey(User, default=None)
-    workout = models.ForeignKey(Workout, null=True)
+    owner = models.ForeignKey(User, related_name='workout_plans', default=None, on_delete=models.CASCADE)
+    author = models.ForeignKey(User, default=None, on_delete=models.CASCADE)
+    workout = models.ForeignKey(Workout, null=True, on_delete=models.CASCADE)
     # calendar = models.ForeignKey(Calendar, related_name='plans')
     date_on = models.DateField(null=True)
     repeats = models.CharField(max_length=10, choices=PLAN_REPEATS, null=True)

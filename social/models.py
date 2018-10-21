@@ -49,8 +49,8 @@ class FriendManager(models.Manager):
 '''
 
 class Invite(models.Model):
-    sender = models.ForeignKey(User, related_name='invites_send')
-    receiver = models.ForeignKey(User, related_name='invites_received')
+    sender = models.ForeignKey(User, related_name='invites_send', on_delete=models.CASCADE)
+    receiver = models.ForeignKey(User, related_name='invites_received', on_delete=models.CASCADE)
     accepted = models.CharField(max_length=1, choices=CHOICES, default=CHOICES[0][0])
 
     pending = FriendInviteManager()
@@ -61,7 +61,7 @@ class Invite(models.Model):
 
 class Friend(models.Model):
     users = models.ManyToManyField(User, related_name='friends')
-    current_user = models.ForeignKey(User, related_name='friend_object', null=True)
+    current_user = models.ForeignKey(User, related_name='friend_object', null=True, on_delete=models.CASCADE)
 
     objects = FriendManager()
     list = FriendListManager()
@@ -85,8 +85,8 @@ class Friend(models.Model):
 
 
 class Message(models.Model):
-    author = models.ForeignKey(User, related_name='sent_messages', verbose_name="Sender")
-    receiver = models.ForeignKey(User, related_name='received_messages', verbose_name="Reveiver")
+    author = models.ForeignKey(User, related_name='sent_messages', verbose_name="Sender", on_delete=models.CASCADE)
+    receiver = models.ForeignKey(User, related_name='received_messages', verbose_name="Reveiver", on_delete=models.CASCADE)
     content = models.TextField(max_length=500)
     read = models.BooleanField(default=False)
     send = models.DateTimeField(auto_now_add=True)

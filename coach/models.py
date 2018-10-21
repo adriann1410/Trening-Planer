@@ -27,8 +27,8 @@ class CoachProfile(models.Model):
 
 
 class Comment(models.Model):
-    coach = models.ForeignKey(CoachProfile, related_name='comments', verbose_name=("Coach"), default=None)
-    author = models.ForeignKey(User, related_name='sent_comment', verbose_name=("author"))
+    coach = models.ForeignKey(CoachProfile, related_name='comments', verbose_name=("Coach"), default=None, on_delete=models.CASCADE)
+    author = models.ForeignKey(User, related_name='sent_comment', verbose_name=("author"), on_delete=models.CASCADE)
     date = models.DateTimeField(auto_now=True)
     content = models.TextField(max_length=500)
     commentRate = models.DecimalField(max_digits=2, decimal_places=1,
@@ -39,7 +39,7 @@ class Comment(models.Model):
 
 
 class CoachApplication(models.Model):
-    sender = models.ForeignKey(User)
+    sender = models.ForeignKey(User, on_delete=models.CASCADE)
     date = models.DateTimeField(auto_now_add=True)
     note = models.TextField(max_length=500, null=True)
     state = models.BooleanField(default=False, verbose_name="Accept")
