@@ -21,7 +21,6 @@ def index(request):
 
 
 def userProfile(request, pk):
-
     if request.method == 'POST':
         form = CommentForm(request.POST)
 
@@ -30,7 +29,7 @@ def userProfile(request, pk):
                                 coach=User.objects.get(id=pk).coach_profile,
                                 author=request.user,
                                 content=form.cleaned_data.get("content"),
-                                commentRate= form.cleaned_data.get("commentRate")
+                                commentRate=form.cleaned_data.get("commentRate")
                                 )
             new_comment.save()
         return redirect('./')

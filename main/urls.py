@@ -1,4 +1,5 @@
 from django.conf.urls import url, include
+from django.urls import path, re_path
 from . import views
 
 urlpatterns = [
@@ -8,5 +9,5 @@ urlpatterns = [
     url(r'^users$', views.users, name="users"),
     url(r'^register$', views.registerView, name="register"),
     url(r'^user/edit$', views.userProfileEdit, name='editProfile'),
-    url(r'^user/(?P<pk>[0-9]+)/$', views.userProfile, name="userProfile")
+    path('user/<int:pk>/', views.userProfile, name="userProfile")
 ]
