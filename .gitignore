@@ -61,10 +61,6 @@ fabric.properties
 
 .idea
 media/profile_image
-main/migrations
-social/migrations
-workout/migrations
-coach/migrations
 db.sqlite3
 
 *.egg-info
@@ -82,3 +78,4 @@ tests/.coverage
 build/
 tests/report/
 
+venv/
