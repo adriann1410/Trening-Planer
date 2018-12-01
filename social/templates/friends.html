@@ -7,10 +7,7 @@
     <div class="container">
 
         {% profile_navbar current_page="friends" user_id=request.user.id %}
-
-        <div class="row mt-4">
-
-                <div class="card" style="width: 100%">
+                <div class="card">
 
                   <h4 class="card-header">Friends:</h4>
                     {% if friends %}
@@ -35,12 +32,8 @@
                         </div>
                     {% endif %}
                   </div>
-
-                </div>
-        </div>
-    <hr>
-        <div class="row">
-            <div class="card" style="width: 100%">
+        <hr>
+         <div class="card">
 
                     <h4 class="card-header">Friends invitations:</h4>
                     {% if pending %}
@@ -62,7 +55,11 @@
                         </div>
                     {% endif %}
             </div>
+
         </div>
+
+
+
 
     </div>
 

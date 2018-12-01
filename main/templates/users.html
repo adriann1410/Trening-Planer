@@ -1,17 +1,34 @@
 {% extends 'base.html' %}
 {% block content %}
 
-    <div class="container">
-    <h2>Welcome {{ user.email }} !</h2>
-
-    <hr>
-
-        <ul>
-
+    <div class="container p-4">
         {% for user in users %}
-            <li><a href="user/{{ user.id }}">{{ user.email }}</a><a href={% url 'friend_add' pk=user.id %}><i class="ml-2 fa fa-user-plus" aria-hidden="true"></i></a> </li>
+            <div>
+            <div class = "card p-4 mt-2">
+                <div class="media">
+                    <a href="/user/{{ user.id }}" style="color: inherit">
+                    {% if user.profile.image %}
+                    <img class="mr-3" src="{{ user.profile.image.url }}" width="120" height="120">
+                     {% else %}
+                    <img class="mr-3" src="{{ media|placeholder_image }}" width="120" height="120">
+                    {% endif %}</a>
+                     <div class="media-body">
+                     <a href="/user/{{ user.id }}" style="color: inherit">
+                     <h5 class="mt-0">{{ user.first_name }} {{ user.last_name }}</h5>
+                     <p>{{ user.email }}</p>
+                     </a>
+                    </div>
+                </div>
+                <div class="row justify-content-end">
+                    <div class="col-2">
+                        <a href={% url 'friend_add' pk=user.id %}><button type="button" class="btn btn-success">Add friend<i class="ml-2 fa fa-user-plus" aria-hidden="true"></i></button></a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
         {% endfor %}
-        </ul>
     </div>
 
 

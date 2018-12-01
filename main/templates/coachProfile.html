@@ -5,7 +5,7 @@
 
 {% block content %}
 
-    <div class="container">
+    <div class="container p-4">
 
         {% profile_navbar current_page="userProfile" user_id=coach.user.id %}
 
@@ -67,10 +67,8 @@
 
         {% if user.is_authenticated and request.user.profile.isCoach == False %}
             <hr>
-        <div class="row mt-4">
-            <h4>Add comment:</h4>
-        </div>
-        <div class="row">
+        <div class="row  p-4">
+        <h4>Add comment:</h4>
             <br>
             <form method="post">
                 {% csrf_token %}
@@ -85,26 +83,27 @@
         </div>
         {% endif %}
         <hr>
-        <div class="row mt-4">
+        <div class="row mt-4 pl-4">
             <h4>Comments:</h4>
-            <br><br>
         </div>
-        {% for comment in comments %}
-        <div class="row border border-secondary rounded mt-1">
-            <div class="col-2">
-                <h5>{{ comment.author }}</h5>
-                <tag><small>{{ comment.date }}</small></tag>
+            {% for comment in comments %}
+            <div class="card p-4">
+                <div class="row mt-1">
+                    <div class="col-2">
+                        <h5>{{ comment.author }}</h5>
+                        <tag><small>{{ comment.date }}</small></tag>
+                    </div>
+                    <div class="col-9">
+                        <br>
+                        {{ comment.content | linebreaks }}
+                    </div>
+                    <div class="col-1">
+                        <p>rate:</p>
+                        <h5>{{ comment.commentRate }}/5</h5>
+                    </div>
+                </div>
             </div>
-            <div class="col-9">
-                <br>
-                {{ comment.content | linebreaks }}
-            </div>
-            <div class="col-1">
-                <p>rate:</p>
-                <h5>{{ comment.commentRate }}/5</h5>
-            </div>
-        </div>
-        {% endfor %}
+            {% endfor %}
 
     </div>
 {% endblock %}

@@ -3,11 +3,11 @@
 {% load templatefilters %}
 
 {% block content %}
-<div class = "container">
+<div class = "container p-4">
     {% if coaches %}
     {% for coach in coaches %}
-        <div class = "mt-4">
-            <div class = "jumbotron">
+        <div>
+            <div class = "card p-4 mt-2">
                 <div class="media">
                     <a href="/user/{{ coach.user_id }}" style="color: inherit">
                     {% if coach.user.profile.image %}
@@ -25,12 +25,12 @@
                     </div>
                 </div>
                 <div class="row justify-content-between mt-4">
-                    <div class="col-md-4">
+                    <div class="col-md-2">
                         <a href="/user/{{ coach.user_id }}" ><button class="btn btn-default" type="button" style="background-color: #ffcc00">
                           rate : <span> {{ avg_rates|get_item:coach.user.id}} </span>
                       </button></a>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-2">
                         <a href={% url 'collaborate' pk=coach.user_id %}><button type="button" class="btn btn-success">Start Collaboration</button></a>
                     </div>
                 </div>
