@@ -4,23 +4,20 @@
 
 {% block content %}
 
-    <div class="container">
+    <div class="container p-4">
         {% workout_navbar %}
 
         <div class="row">
-            <div class="col-lg-offset-2">
-                <h3>Edit workout:</h3>
+            <div class="card" style="width: 100%">
+                <h3 class="card-header">Edit workout:</h3>
             <form method="post">
             {% csrf_token %}
                   {% for schedule in schedules %}
                       <div class="col-lg-offset-2">
-                        <div class="row" id="exerciseSelectDiv">
-                                <div class="form-row">
-                                    <div class="col">
-                                        <label>{{ forloop.counter }}</label>
-                                    </div>
-                                    <div class="col">
-                                        <label>{{ schedule.exercise.name }}</label>
+                        <div class="row p-4" id="exerciseSelectDiv">
+                                    <div class="col-lg-2">
+                                        <h4>{{ forloop.counter }}.</h4>
+                                        <h4>{{ schedule.exercise.name }}</h4>
                                     </div>
                                     <div class="col">
                                         <label for="seriesSelect">Series</label>
@@ -37,7 +34,6 @@
                                         {{ schedule.weight }}
                                         <input type="number" min="0" class="form-control" id="weightSelect" placeholder="0" name="weightInputs[]">
                                     </div>
-                            </div>
                             <br>
                         </div>
                     </div>
