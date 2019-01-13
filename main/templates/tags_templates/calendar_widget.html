@@ -30,7 +30,8 @@
                             <td class="agenda-events">
                                 <div class="agenda-event">
 {#                                    <i class="glyphicon glyphicon-repeat text-muted" title="Repeating event"></i> #}
-                                    {{ plan.workout.name }}
+
+                                    <a href={% url 'workout_detail' pk=plan.workout.id %}>{{ plan.workout.name }}</a>
                                 </div>
                             </td>
                         </tr>

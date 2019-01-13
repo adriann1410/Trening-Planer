@@ -115,6 +115,7 @@ class Plan(models.Model):
     owner = models.ForeignKey(User, related_name='workout_plans', default=None, on_delete=models.CASCADE)
     author = models.ForeignKey(User, default=None, on_delete=models.CASCADE)
     workout = models.ForeignKey(Workout, null=True, on_delete=models.CASCADE)
+    # schedule = models.ForeignKey(Schedule, null=True, on_delete=models.CASCADE)
     # calendar = models.ForeignKey(Calendar, related_name='plans')
     date_on = models.DateField(null=True)
     repeats = models.CharField(max_length=10, choices=PLAN_REPEATS, null=True)
