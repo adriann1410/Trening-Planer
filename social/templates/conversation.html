@@ -3,18 +3,18 @@
 
 {% block content %}
 
-    <div class="container">
+    <div class="container p-4">
 
         {% profile_navbar current_page="" user_id=request.user.id %}
 
-        <div class="row">
-            <div class="col-md-6-offset-3"><br>
-                <h2>Messages with: {% conversationReceiver conversation %}</h2>
+        <div class="row ">
+            <div class="col"><br>
+                <h2>Conversation with: {% conversationReceiver conversation %}</h2>
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-md-6-offset-3"><br>
+        <div class="row justify-content-center">
+            <div class="col-9"><br>
                 <div class="card">
                     <div class="card-body">
                         <form method="post">
@@ -31,23 +31,27 @@
 
         </div>
 
-        <div class="row">
-        <div class="col-md-6-offset-3"><br>
+
+        <br>
+            <div class="pl-5 pr-5">
             {% if messages %}
                     {% for message in messages %}
-                        <div class="card">
-                            <div class="card-body">
-                            <h5 class="card-title">
-                                {{ message.content }}</h5>
-                                <div class="card-text"><small>{{ message.send }}</small></div>
-                            </div>
+                        <div class="row {% if message.author.id == request.user.id %}justify-content-end{%endif%}">
+{#                            <div class="col-8">#}
+                                <div class="card ">
+                                    <div class="card-body rounded" style="background-color: {% if message.author.id == request.user.id %} #4d4d4d {% else %} #262626 {%endif%}">
+                                        <h5 class="card-text">{{ message.content }}</h5>
+                                        <div class="card-text"><small>{{ message.send }}</small></div>
+                                    </div>
+                                </div>
+{#                            </div>#}
                         </div>
                     {% endfor %}
                 {% else %}
                     <h3>No messages</h3>
                 {% endif %}
-        </div>
-        </div>
+            </div>
+
     </div>
 
 {% endblock %}

@@ -3,13 +3,13 @@
 
 {% block content %}
 
-    <div class="container">
+    <div class="container p-4">
 
         {% profile_navbar current_page="coach_panel" user_id=request.user.id %}
 
 
         <div class="row">
-            <div class="col-md-6-offset-3"><br>
+            <div class="col"><br>
             <h3>Coach Panel:</h3>
             <hr>
                 {% if pupils %}

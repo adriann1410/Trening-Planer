@@ -4,7 +4,7 @@
 
 {% block content %}
 
-    <div class="container">
+    <div class="container p-4">
         {% workout_navbar %}
 
         <div class="row p-4">
@@ -37,11 +37,13 @@
 
                   </tbody>
                 </table>
+
+                             <a href={% url 'edit_workout' pk=workout_pk %}><button class="btn btn-success">Edit</button> </a>
+
             </div>
         </div>
         <div class="row">
              <div class="col-lg-offset-2 p-4">
-                 <a href={% url 'edit_workout' pk=workout_pk %}><button class="btn btn-success">Edit</button> </a>
                  <div class="form-group">
                      <form method="post">
                          {% csrf_token %}

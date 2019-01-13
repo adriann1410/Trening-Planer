@@ -31,7 +31,7 @@
                                 <div class="agenda-event">
 {#                                    <i class="glyphicon glyphicon-repeat text-muted" title="Repeating event"></i> #}
 
-                                    <a href={% url 'workout_detail' pk=plan.workout.id %}>{{ plan.workout.name }}</a>
+                                    <a style="color: inherit" href={% url 'workout_detail' pk=plan.workout.id %}><h4>{{ plan.workout.name }}</h4></a>
                                 </div>
                             </td>
                         </tr>
